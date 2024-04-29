@@ -1,4 +1,4 @@
-package fr.g4zoo.fantastizoo;
+package fr.g4zoo.fantastizoo.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
