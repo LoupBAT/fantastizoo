@@ -15,4 +15,8 @@ public class Dragon extends Oviparous implements Flyer, Runner, Swimmer, Reborne
     public void run() {
 
     }
+
+    public void fly() {
+
+    }
 }

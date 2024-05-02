@@ -8,4 +8,8 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     public void layEgg() {
 
     }
+
+    public void fly() {
+
+    }
 }
