@@ -8,4 +8,8 @@ public class Mermaid extends Viviparous implements Swimmer {
     public void giveBirth() {
 
     }
+
+    public void swim() {
+
+    }
 }

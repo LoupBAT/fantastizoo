@@ -7,4 +7,8 @@ public class Kraken extends Oviparous implements Swimmer {
     public void layEgg() {
 
     }
+
+    public void swim() {
+
+    }
 }
