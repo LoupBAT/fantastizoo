@@ -110,10 +110,9 @@ public abstract class Creature {
     public void eat(int satietyPoint) {
         this.setSatiety(this.getSatiety() + satietyPoint);
         this.setHungry(this.getSatiety() <= 40);
+        this.setWeight(this.getWeight() + (this.getSatiety() - 100));
+        this.setHealth(this.getHealth() - (this.getSatiety() - 100));
         this.setSatiety(Math.min(this.getSatiety(), 100));
-
-        // TODO Tâche 1.2: Méthode eat() - Faire la logique de prise de poids
-
     }
 
     public void makeSound(String soundUrl) {
