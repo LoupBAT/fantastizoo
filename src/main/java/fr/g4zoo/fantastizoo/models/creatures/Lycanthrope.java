@@ -8,4 +8,8 @@ public class Lycanthrope extends Viviparous implements Runner {
     public void giveBirth() {
 
     }
+
+    public void run() {
+
+    }
 }
