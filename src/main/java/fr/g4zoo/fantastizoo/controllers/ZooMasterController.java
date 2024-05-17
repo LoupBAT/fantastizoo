@@ -4,8 +4,15 @@ import fr.g4zoo.fantastizoo.models.Zoo;
 import fr.g4zoo.fantastizoo.models.ZooMaster;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ZooMasterController {
 
@@ -54,7 +61,7 @@ public class ZooMasterController {
         Integer actionValue = 5;
         String zooValue = zoo.getText();
 
-        if (nameValue != null && !nameValue.isEmpty() && ageValue != null && genderValue != null && zooValue != null && !zooValue.isEmpty( )) {
+        if (nameValue != null && !nameValue.isEmpty() && ageValue != null && genderValue != null && zooValue != null && !zooValue.isEmpty()) {
             ZooMaster master = new ZooMaster();
             master.setName(nameValue);
             master.setAge(ageValue);
@@ -72,9 +79,20 @@ public class ZooMasterController {
                     "HP : " + master.getHp() + "\n" +
                     "Action : " + master.getAction() + "\n" +
                     "Zoo : " + zoo.getName());
+
+            // Rediriger vers la vue fantastizoo.fxml
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/g4zoo/fantastizoo/fantastizoo.fxml"));
+                Scene scene = new Scene(loader.load());
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("Impossible de charger la vue fantastizoo.fxml");
+            }
         } else {
             System.out.println("Veuillez remplir tous les champs !");
         }
     }
-
 }
