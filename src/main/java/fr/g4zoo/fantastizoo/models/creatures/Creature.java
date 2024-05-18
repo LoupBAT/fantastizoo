@@ -2,7 +2,11 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 
+import java.util.Random;
+
 public abstract class Creature {
+
+    private static final Random RANDOM = new Random();
 
     // ATTRIBUTES
 
@@ -157,4 +161,15 @@ public abstract class Creature {
 
     }
 
+    protected char generateRandomGender() {
+        return RANDOM.nextBoolean() ? 'm' : 'f';
+    }
+
+    protected double generateRandomWeight(double min, double max) {
+        return min + (max - min) * RANDOM.nextDouble();
+    }
+
+    protected double generateRandomHeight(double min, double max) {
+        return min + (max - min) * RANDOM.nextDouble();
+    }
 }
