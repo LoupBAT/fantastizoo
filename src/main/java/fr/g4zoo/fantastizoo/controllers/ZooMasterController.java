@@ -55,13 +55,13 @@ public class ZooMasterController {
     @FXML
     void onClickSave(ActionEvent event) {
         String nameValue = name.getText();
-        Integer ageValue = Integer.valueOf(Age.getText());
+        int ageValue = Integer.parseInt(Age.getText());
         Character genderValue = men.isSelected() ? 'h' : (women.isSelected() ? 'f' : null);
-        Integer hpValue = 3;
-        Integer actionValue = 5;
+        int hpValue = 3;
+        int actionValue = 5;
         String zooValue = zoo.getText();
 
-        if (nameValue != null && !nameValue.isEmpty() && ageValue != null && genderValue != null && zooValue != null && !zooValue.isEmpty()) {
+        if (nameValue != null && !nameValue.isEmpty() && ageValue != 0 && genderValue != null && zooValue != null && !zooValue.isEmpty()) {
             ZooMaster master = new ZooMaster();
             master.setName(nameValue);
             master.setAge(ageValue);
@@ -69,8 +69,7 @@ public class ZooMasterController {
             master.setHp(hpValue);
             master.setAction(actionValue);
 
-            Zoo zoo = new Zoo();
-            zoo.setName(zooValue);
+            Zoo zoo = new Zoo(zooValue, master);
 
             System.out.println("Objet ZooMaster créé avec succès :\n" +
                     "Nom : " + master.getName() + "\n" +
@@ -79,9 +78,8 @@ public class ZooMasterController {
                     "HP : " + master.getHp() + "\n" +
                     "Action : " + master.getAction() + "\n" +
                     "Zoo : " + zoo.getName());
-
-            // Rediriger vers la vue fantastizoo.fxml
             try {
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/g4zoo/fantastizoo/fantastizoo.fxml"));
                 Scene scene = new Scene(loader.load());
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
