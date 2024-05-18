@@ -4,9 +4,9 @@ public class ZooMaster {
 
     private String name;
     private Character gender;
-    private Integer age;
-    private Integer hp;
-    private Integer action;
+    private int age;
+    private int hp;
+    private int action;
 
     //GETTERS
 
@@ -18,15 +18,15 @@ public class ZooMaster {
         return gender;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public Integer getHp() {
+    public int getHp() {
         return hp;
     }
 
-    public Integer getAction() {
+    public int getAction() {
         return action;
     }
 
