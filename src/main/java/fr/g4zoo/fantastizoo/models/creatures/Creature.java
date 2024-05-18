@@ -18,10 +18,10 @@ public abstract class Creature {
     private double weight;
     private double height;
 
-    private int satiety;
+    private int satiety = 100;
     private boolean isHungry;
 
-    private int health;
+    private int health = 100;
     private boolean isAsleep;
 
     // GETTERS

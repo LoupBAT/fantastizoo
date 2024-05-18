@@ -1,11 +1,11 @@
 package fr.g4zoo.fantastizoo.models;
 
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
+import fr.g4zoo.fantastizoo.models.enclosures.Aviary; // Importer la classe Aviary
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 public class Zoo {
 
@@ -14,7 +14,7 @@ public class Zoo {
     private final ArrayList<Enclosure> enclosures;
     private final int maxEnclosures;
 
-    // CONSTRUCTER
+    // CONSTRUCTOR
 
     public Zoo(String name, ZooMaster zooMaster) {
         this.name = name;
@@ -27,14 +27,13 @@ public class Zoo {
             @Override
             public void run() {
                 System.out.println("Starting timer");
-
-                // TODO: Tâche appeler la periodic update de tout les enclos
+                // TODO: Tâche appelée périodiquement pour la mise à jour de tous les enclos
             }
         };
         timer.schedule(timerTask, 0, 15000);
     }
 
-    //GETTERS
+    // GETTERS
 
     public String getName() {
         return name;
@@ -52,10 +51,35 @@ public class Zoo {
         return maxEnclosures;
     }
 
-    //SETTERS
+    // SETTERS
 
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    public void addEnclosure(Enclosure enclosure) {
+        if (enclosures.size() < maxEnclosures) {
+            enclosures.add(enclosure);
+            System.out.println("Enclosure added to the zoo: " + enclosure.getName());
+        } else {
+            System.out.println("Cannot add enclosure. Maximum enclosures reached.");
+        }
+    }
+
+    public Enclosure getEnclosureByName(String enclosureName) {
+        for (Enclosure enclosure : enclosures) {
+            if (enclosure.getName().equals(enclosureName)) {
+                return enclosure;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Enclosure> getAllEnclosures() {
+        ArrayList<Enclosure> allEnclosures = new ArrayList<>();
+        for (Enclosure enclosure : enclosures) {
+            allEnclosures.add(enclosure);
+        }
+        return allEnclosures;
+    }
 }
