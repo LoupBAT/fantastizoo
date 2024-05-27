@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="809.0" prefWidth="1202.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.g4zoo.fantastizoo.controllers.ZooAppController">
+    <children>
+        <SplitPane dividerPositions="0.25111358574610243, 0.7321826280623608" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <items>
+                <AnchorPane prefHeight="691.0" prefWidth="392.0">
+                    <children>
+                        <Label alignment="CENTER" layoutX="16.0" layoutY="115.0" minWidth="60.0" prefHeight="5.0" prefWidth="61.0" style="&#10;" text="Enclos" wrapText="false">
+                            <textFill>
+                                <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+                            </textFill>
+                            <font>
+                                <Font name="AppleGothic Regular" size="12.0" />
+                            </font>
+                        </Label>
+                        <ListView fx:id="enclosureListView" layoutX="29.0" layoutY="147.0" prefHeight="188.0" prefWidth="222.0" />
+                        <Label alignment="CENTER" layoutX="18.0" layoutY="347.0" minWidth="60.0" prefHeight="18.0" prefWidth="146.0" style="&#10;" text="Nombre de créatures :" wrapText="false">
+                            <textFill>
+                                <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
+                            </textFill>
+                            <font>
+                                <Font name="AppleGothic Regular" size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="creatureCountLabel" layoutX="27.0" layoutY="387.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-width: 1; -fx-border-color: #c1c1c1; -fx-min-width: 50px;" text="0">
+                            <font>
+                                <Font name="AppleGothic Regular" size="11.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="zooName" layoutX="26.0" layoutY="40.0" text="Nom du Zoo">
+                            <font>
+                                <Font name="AppleGothic Regular" size="20.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+                    <content>
+                        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="571.0">
+                            <children>
+                        <ListView fx:id="creatureListView" layoutX="12.0" layoutY="14.0" prefHeight="345.0" prefWidth="548.0" />
+                            </children></AnchorPane>
+                    </content>
+                </ScrollPane>
+                <AnchorPane>
+                    <children>
+                        <Label alignment="CENTER" layoutX="26.0" layoutY="48.0" style="&#10;" text="Actions sur l'enclos" textAlignment="CENTER" textFill="$x2" wrapText="false">
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="108.0" layoutY="435.0" mnemonicParsing="false" text="Entraîner" />
+                        <Button layoutX="35.0" layoutY="377.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="79.0" text="Transférer" />
+                        <Button layoutX="35.0" layoutY="252.0" mnemonicParsing="false" text="Nettoyer l'enclos" />
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="330.0" style="&#10;" text="Actions sur la créature" textAlignment="CENTER" wrapText="false">
+                            <textFill>
+                                <Color red="0.624" green="0.624" blue="0.624" fx:id="x22" />
+                            </textFill>
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="35.0" layoutY="434.0" mnemonicParsing="false" text="Soigner" />
+                        <Label alignment="CENTER" layoutX="120.0" layoutY="382.0" style="&#10;" text=" dans l'enclos" textAlignment="CENTER" wrapText="false">
+                            <textFill>
+                                <Color red="0.624" green="0.624" blue="0.624" fx:id="x221" />
+                            </textFill>
+                            <font>
+                                <Font name="AppleGothic Regular" size="10.0" />
+                            </font>
+                        </Label>
+                        <ChoiceBox layoutX="187.0" layoutY="377.0" prefHeight="26.0" prefWidth="96.0" />
+                        <Button layoutX="160.0" layoutY="253.0" mnemonicParsing="false" text="Nourrir les créatures" />
+                        <Text layoutX="37.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aire :">
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="36.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacité :">
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="enclosure_capacity" layoutX="110.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="enclosure_area" layoutX="80.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Text>
+                        <ProgressBar fx:id="enclosure_cleanliness_bar" layoutX="31.0" layoutY="210.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="13.0" prefWidth="253.0" progress="0.0" />
+                        <Text layoutX="35.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propreté :">
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="enclosure_cleanliness" layoutX="111.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                            <font>
+                                <Font name="AppleGothic Regular" size="13.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+        <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="4.0" prefWidth="1202.0" spacing="5.0" VBox.vgrow="NEVER">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="11.0" fx:id="x3" />
+                    </font>
+                    <textFill>
+                        <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+                    </textFill>
+                </Label>
+                <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+            </children>
+            <padding>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </padding>
+        </HBox>
+    </children>
+</VBox>
