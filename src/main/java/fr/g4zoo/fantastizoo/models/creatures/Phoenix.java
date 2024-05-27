@@ -2,17 +2,24 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
-import java.util.Random;
+import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 
 public class Phoenix extends Oviparous implements Flyer, Reborner {
 
     private static final int DEFAULT_INCUBATION_PERIOD = 5;
-    private static final Random RANDOM = new Random();
+    private static final String[] NAMES = {"Fawkes", "Pyro", "Blaze", "Ember", "Flare", "Inferno", "Sparky", "Ash"};
+    private Enclosure enclosure;
 
     // Constructor
-    public Phoenix(String name) {
+    public Phoenix(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);
+        this.enclosure = enclosure;
+        this.setGender(gender);
+        this.setAge(age);
+        this.setWeight(weight);
+        this.setHeight(height);
+        enclosure.addCreature(this);
     }
 
     @Override
@@ -23,20 +30,11 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
         }
 
         System.out.println(this.getName() + " a pondu un œuf.");
-        int incubationPeriod = getIncubationPeriod();
-
-        // Simulate incubation period with a thread
-        new Thread(() -> {
-            try {
-                Thread.sleep(incubationPeriod * 1000L);
-                Phoenix babyPhoenix = createBabyPhoenix();
-                System.out.println("L'œuf de " + getName() + " a éclos et un bébé phénix est né : " + babyPhoenix.getName() + " !");
-                addBabyPhoenixToZoo(babyPhoenix);
-            } catch (InterruptedException e) {
-                System.err.println("L'incubation de l'œuf de " + getName() + " a été interrompue.");
-                Thread.currentThread().interrupt();
-            }
-        }).start();
+        simulateIncubationPeriod(() -> {
+            Phoenix babyPhoenix = createBabyPhoenix();
+            System.out.println("L'œuf de " + getName() + " a éclos et un bébé phénix est né : " + babyPhoenix.getName() + " !");
+            addBabyPhoenixToZoo(babyPhoenix);
+        });
     }
 
     @Override
@@ -45,30 +43,18 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     }
 
     private Phoenix createBabyPhoenix() {
-        String babyName = generateRandomName();
+        String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(1.0, 3.0);
         double height = generateRandomHeight(0.2, 0.5);
 
-        Phoenix babyPhoenix = new Phoenix(babyName);
-        babyPhoenix.setGender(gender);
-        babyPhoenix.setAge(0);
-        babyPhoenix.setWeight(weight);
-        babyPhoenix.setHeight(height);
-
-        return babyPhoenix;
+        return new Phoenix(babyName, this.enclosure, gender, 1, weight, height);
     }
 
     private void addBabyPhoenixToZoo(Phoenix babyPhoenix) {
-        // TODO Add the baby to the same enclosure as his mom
+        if (this.enclosure != null) {
+            this.enclosure.addCreature(babyPhoenix);
+        }
         System.out.println("Bébé phénix ajouté au zoo: " + babyPhoenix.getName());
     }
-
-    private String generateRandomName() {
-        String[] names = {"Fawkes", "Pyro", "Blaze", "Ember", "Flare", "Inferno", "Sparky", "Ash"};
-        return names[RANDOM.nextInt(names.length)];
-    }
-
-
-
 }

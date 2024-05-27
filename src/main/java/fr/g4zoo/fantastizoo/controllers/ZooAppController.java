@@ -37,54 +37,23 @@ public class ZooAppController {
     private Zoo zoo;
 
     public void initialize() {
-        //CECI EST UN TEST POUR LES ENCLOS
+    // TEST POUR LES ENCLOS
         zoo = new Zoo("Fantastizoo", new ZooMaster());
-
 
         Aviary aviary = new Aviary("Phénix 1", 500.0, 20.0);
 
-        Phoenix phoenixMale = new Phoenix("Ember");
-        phoenixMale.setGender('m');
-        phoenixMale.setAge(15);
-        phoenixMale.setWeight(10.0);
-        phoenixMale.setHeight(2.0);
-
-        Phoenix phoenixFemale = new Phoenix("Blaze");
-        phoenixFemale.setGender('f');
-        phoenixFemale.setAge(12);
-        phoenixFemale.setWeight(8.0);
-        phoenixFemale.setHeight(1.8);
-
-        Phoenix phoenixFemale2 = new Phoenix("Rode");
-        phoenixFemale.setGender('f');
-        phoenixFemale.setAge(16);
-        phoenixFemale.setWeight(18.0);
-        phoenixFemale.setHeight(10.8);
-
-        aviary.addCreature(phoenixMale);
-        aviary.addCreature(phoenixFemale);
-        aviary.addCreature(phoenixFemale2);
+        Phoenix phoenixMale = new Phoenix("Ember", aviary, 'm', 15, 10.0, 2.0);
+        Phoenix phoenixFemale = new Phoenix("Blaze", aviary, 'f', 12, 8.0, 1.8);
+        Phoenix phoenixFemale2 = new Phoenix("Rode", aviary, 'f', 16, 18.0, 10.8);
 
         Aviary secondAviary = new Aviary("Phénix 2", 800.0, 30.0);
 
-        Phoenix newPhoenixMale = new Phoenix("Fawkes");
-        newPhoenixMale.setGender('m');
-        newPhoenixMale.setAge(20);
-        newPhoenixMale.setWeight(12.0);
-        newPhoenixMale.setHeight(2.2);
-
-        Phoenix newPhoenixFemale = new Phoenix("Pyro");
-        newPhoenixFemale.setGender('f');
-        newPhoenixFemale.setAge(18);
-        newPhoenixFemale.setWeight(9.0);
-        newPhoenixFemale.setHeight(2.0);
-
-        secondAviary.addCreature(newPhoenixMale);
-        secondAviary.addCreature(newPhoenixFemale);
+        Phoenix newPhoenixMale = new Phoenix("Fawkes", secondAviary, 'm', 20, 12.0, 2.2);
+        Phoenix newPhoenixFemale = new Phoenix("Pyro", secondAviary, 'f', 18, 9.0, 2.0);
 
         zoo.addEnclosure(aviary);
         zoo.addEnclosure(secondAviary);
-        //FIN DU TEST POUR LES ENCLOS
+    // FIN DU TEST POUR LES ENCLOS
 
         updateUI();
 
