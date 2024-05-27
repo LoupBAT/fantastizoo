@@ -43,7 +43,7 @@
                                 <Font name="AppleGothic Regular" size="11.0" />
                             </font>
                         </Label>
-                        <Label layoutX="26.0" layoutY="40.0" text="Nom du Zoo">
+                        <Label fx:id="zooName" layoutX="26.0" layoutY="40.0" text="Nom du Zoo">
                             <font>
                                 <Font name="AppleGothic Regular" size="20.0" />
                             </font>

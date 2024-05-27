@@ -52,8 +52,9 @@ public class ZooMasterController {
         }
     }
 
+
     @FXML
-    void onClickSave(ActionEvent event) {
+    void onClickSave(ActionEvent event) throws IOException {
         String nameValue = name.getText();
         int ageValue = Integer.parseInt(Age.getText());
         Character genderValue = men.isSelected() ? 'h' : (women.isSelected() ? 'f' : null);
@@ -61,7 +62,7 @@ public class ZooMasterController {
         int actionValue = 5;
         String zooValue = zoo.getText();
 
-        if (nameValue != null && !nameValue.isEmpty() && ageValue != 0 && genderValue != null && zooValue != null && !zooValue.isEmpty()) {
+        if (nameValue != null && !nameValue.isEmpty() && ageValue != 0 && zooValue != null && !zooValue.isEmpty()) {
             ZooMaster master = new ZooMaster();
             master.setName(nameValue);
             master.setAge(ageValue);
@@ -69,26 +70,15 @@ public class ZooMasterController {
             master.setHp(hpValue);
             master.setAction(actionValue);
 
-            Zoo zoo = new Zoo(zooValue, master);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/g4zoo/fantastizoo/fantastizoo.fxml"));
+            Parent root = loader.load();
 
-            System.out.println("Objet ZooMaster créé avec succès :\n" +
-                    "Nom : " + master.getName() + "\n" +
-                    "Genre : " + master.getGender() + "\n" +
-                    "Âge : " + master.getAge() + "\n" +
-                    "HP : " + master.getHp() + "\n" +
-                    "Action : " + master.getAction() + "\n" +
-                    "Zoo : " + zoo.getName());
-            try {
+            ZooAppController zooAppController = loader.getController();
+            zooAppController.initialize(master, zooValue);
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/g4zoo/fantastizoo/fantastizoo.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.err.println("Impossible de charger la vue fantastizoo.fxml");
-            }
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } else {
             System.out.println("Veuillez remplir tous les champs !");
         }

@@ -34,11 +34,15 @@ public class ZooAppController {
     @FXML
     private Text enclosure_cleanliness;
 
+    @FXML
+    private Label zooName;
+
     private Zoo zoo;
 
-    public void initialize() {
-    // TEST POUR LES ENCLOS
-        zoo = new Zoo("Fantastizoo", new ZooMaster());
+    public void initialize(ZooMaster master, String zooName) {
+        // TEST POUR LES ENCLOS
+        zoo = new Zoo(zooName, master);
+        this.zooName.setText(zooName);
 
         Aviary aviary = new Aviary("Phénix 1", 500.0, 20.0);
 
@@ -73,15 +77,15 @@ public class ZooAppController {
 
     private void updateUI() {
         if (zoo != null) {
-            int totalCreatureCount = 0; // Initialisation du nombre total de créatures à 0
+            int totalCreatureCount = 0;
 
             enclosureListView.getItems().clear();
             for (Enclosure enclosure : zoo.getAllEnclosures()) {
                 enclosureListView.getItems().add(enclosure.getName());
-                totalCreatureCount += enclosure.getCreatureNumber(); // Ajouter le nombre de créatures de l'enclos au total
+                totalCreatureCount += enclosure.getCreatureNumber();
             }
 
-            creatureCountLabel.setText("" + totalCreatureCount); // Mettre à jour le label avec le nombre total de créatures
+            creatureCountLabel.setText("" + totalCreatureCount);
         }
     }
 
