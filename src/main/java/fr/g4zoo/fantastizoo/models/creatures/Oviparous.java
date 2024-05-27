@@ -5,7 +5,6 @@ import java.util.Random;
 public abstract class Oviparous extends Creature {
 
     private int incubationPeriod;
-    protected static final Random RANDOM = new Random();
 
     // GETTERS
     public int getIncubationPeriod() {
@@ -29,21 +28,5 @@ public abstract class Oviparous extends Creature {
                 Thread.currentThread().interrupt();
             }
         }).start();
-    }
-
-    protected String generateRandomName(String[] names) {
-        return names[RANDOM.nextInt(names.length)];
-    }
-
-    protected char generateRandomGender() {
-        return RANDOM.nextBoolean() ? 'm' : 'f';
-    }
-
-    protected double generateRandomWeight(double min, double max) {
-        return min + (max - min) * RANDOM.nextDouble();
-    }
-
-    protected double generateRandomHeight(double min, double max) {
-        return min + (max - min) * RANDOM.nextDouble();
     }
 }

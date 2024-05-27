@@ -161,6 +161,10 @@ public abstract class Creature {
 
     }
 
+    protected String generateRandomName(String[] names) {
+        return names[RANDOM.nextInt(names.length)];
+    }
+
     protected char generateRandomGender() {
         return RANDOM.nextBoolean() ? 'm' : 'f';
     }
