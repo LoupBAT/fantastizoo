@@ -108,4 +108,13 @@ public class Enclosure {
         cleanliness = 100;
         System.out.println("L'enclos a été nettoyé. Propreté actuelle : " + cleanliness + "%");
     }
+
+    public Creature getCreatureById(int id){
+        for (Creature creature : creatures) {
+            if (creature.getId() == id) {
+                return creature;
+            }
+        }
+        return null;
+    }
 }

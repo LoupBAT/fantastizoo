@@ -10,6 +10,10 @@ public abstract class Creature {
 
     // ATTRIBUTES
 
+    private static int nextId = 1;
+
+    private final int id;
+
     private String name;
     private String species;
 
@@ -24,7 +28,17 @@ public abstract class Creature {
     private int health = 100;
     private boolean isAsleep;
 
+    // CONSTRUCTORS
+
+    public Creature() {
+        this.id = nextId++;
+    }
+
     // GETTERS
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

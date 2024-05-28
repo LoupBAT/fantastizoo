@@ -2,14 +2,26 @@ package fr.g4zoo.fantastizoo.controllers;
 
 import fr.g4zoo.fantastizoo.models.Zoo;
 import fr.g4zoo.fantastizoo.models.ZooMaster;
+import fr.g4zoo.fantastizoo.models.creatures.Creature;
 import fr.g4zoo.fantastizoo.models.creatures.Phoenix;
+import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
+import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
+import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
 import fr.g4zoo.fantastizoo.models.enclosures.Aviary;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ZooAppController {
 
@@ -37,10 +49,37 @@ public class ZooAppController {
     @FXML
     private Label zooName;
 
+    @FXML
+    public ChoiceBox<String> enclosureListTransfer;
+
     private Zoo zoo;
 
-    public void initialize(ZooMaster master, String zooName) {
+    private Enclosure selectedEnclosure;
+
+    private Map<String, Integer> creatureIdMap = new HashMap<>();
+
+    private Creature selectedCreature;
+
+
+    public Zoo getZoo() {
+        return zoo;
+    }
+
+    public Enclosure getSelectedEnclosure() {
+        return selectedEnclosure;
+    }
+
+    public Creature getSelectedCreature() {
+        return selectedCreature;
+    }
+
+
+
+
+    public void initialize(ZooMaster master, String zooName) throws IOException {
+
         // TEST POUR LES ENCLOS
+
         zoo = new Zoo(zooName, master);
         this.zooName.setText(zooName);
 
@@ -55,15 +94,20 @@ public class ZooAppController {
         Phoenix newPhoenixMale = new Phoenix("Fawkes", secondAviary, 'm', 20, 12.0, 2.2);
         Phoenix newPhoenixFemale = new Phoenix("Pyro", secondAviary, 'f', 18, 9.0, 2.0);
 
+        System.out.println(newPhoenixFemale.getId());
+        System.out.println(newPhoenixMale.getId());
+        System.out.println(phoenixFemale.getId());
+
         zoo.addEnclosure(aviary);
         zoo.addEnclosure(secondAviary);
-    // FIN DU TEST POUR LES ENCLOS
+
+        // FIN DU TEST POUR LES ENCLOS
 
         updateUI();
 
         enclosureListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                Enclosure selectedEnclosure = zoo.getEnclosureByName(newValue);
+                selectedEnclosure = zoo.getEnclosureByName(newValue);
                 if (selectedEnclosure != null) {
                     enclosure_area.setText(selectedEnclosure.getArea() + " m2");
                     enclosure_capacity.setText(selectedEnclosure.getCreatureNumber() + "/" + selectedEnclosure.getMaxCapacity());
@@ -73,6 +117,17 @@ public class ZooAppController {
                 }
             }
         });
+
+
+        creatureListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                int selectedCreatureId = creatureIdMap.get(newValue);
+                selectedCreature = selectedEnclosure.getCreatureById(selectedCreatureId);
+                updateEnclosureListTransfer();
+            }
+        });
+
+
     }
 
     private void updateUI() {
@@ -90,14 +145,56 @@ public class ZooAppController {
     }
 
 
-    private void updateCreatureListView(Aviary enclosure) {
+    private void updateCreatureListView(Enclosure enclosure) {
         creatureListView.getItems().clear();
+        creatureIdMap.clear();
         enclosure.getCreatures().forEach(creature -> {
             String creatureInfo = String.format("Nom: %s, Genre: %c, Âge: %d, Poids: %.2f kg, Taille: %.2f m, Satiété: %d, Vie: %d, Est endormi: %s",
                     creature.getName(), creature.getGender(), creature.getAge(), creature.getWeight(), creature.getHeight(),
                     creature.getSatiety(), creature.getHealth(), creature.isAsleep() ? "Oui" : "Non");
             creatureListView.getItems().add(creatureInfo);
+            creatureIdMap.put(creatureInfo, creature.getId());
         });
     }
+
+    void updateEnclosureListTransfer() {
+        if (this.getZoo() != null) {
+            Zoo zoo = this.getZoo();
+
+            enclosureListTransfer.getItems().clear();
+
+            for (Enclosure enclosure : zoo.getAllEnclosures()) {
+                if (!enclosure.equals(this.getSelectedEnclosure())) {
+                    enclosureListTransfer.getItems().add(enclosure.getName());
+                }
+            }
+        }
+    }
+
+    @FXML
+    public void onClickHeal(ActionEvent event) {
+        this.getSelectedCreature().healing(40);
+    }
+
+    @FXML
+    public void onClickTrain(ActionEvent event) {
+        if (this.getSelectedCreature() instanceof Flyer) {
+            ((Flyer) this.getSelectedCreature()).fly();
+        } else if (this.getSelectedCreature() instanceof Swimmer ) {
+            ((Swimmer) this.getSelectedCreature()).swim();
+        } else {
+            ((Runner) this.getSelectedCreature()).run();
+        }
+    }
+
+
+
+    @FXML
+    public void onClickTransfer(ActionEvent actionEvent) {
+        getSelectedEnclosure().removeCreature(getSelectedCreature());
+        zoo.getEnclosureByName(enclosureListTransfer.getValue()).addCreature(getSelectedCreature());
+        updateCreatureListView(getSelectedEnclosure());
+    }
+
 
 }
