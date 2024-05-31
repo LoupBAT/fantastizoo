@@ -289,10 +289,18 @@ public class ZooAppController {
 
     @FXML
     public void onClickTransfer(ActionEvent actionEvent) {
-        getSelectedEnclosure().removeCreature(getSelectedCreature());
-        zoo.getEnclosureByName(enclosureListTransfer.getValue()).addCreature(getSelectedCreature());
-        updateCreatureListView(getSelectedEnclosure());
+        Enclosure targetEnclosure = zoo.getEnclosureByName(enclosureListTransfer.getValue());
+        if (targetEnclosure != null) {
+            Creature transferredCreature = getSelectedCreature();
+            getSelectedEnclosure().removeCreature(transferredCreature);
+            targetEnclosure.addCreature(transferredCreature);
+            updateCreatureListView(getSelectedEnclosure());
+
+            String message = transferredCreature.getName() + " a été transféré dans l'enclos " + targetEnclosure.getName();
+            System.out.println(message);
+        }
     }
+
 
     @FXML
     public void onClickClean(ActionEvent actionEvent) {

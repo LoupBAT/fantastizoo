@@ -78,7 +78,6 @@ public class Enclosure {
         if (creatureNumber < maxCapacity) {
             creatures.add(creature);
             creatureNumber++;
-            System.out.println("Une créature a été ajoutée : " + creature.getName());
         } else {
             System.out.println("Capacité maximale atteinte ! Impossible d'ajouter une créature.");
         }
@@ -87,7 +86,6 @@ public class Enclosure {
     public void removeCreature(Creature creature) {
         if (creatures.remove(creature)) {
             creatureNumber--;
-            System.out.println("Une créature a été retirée : " + creature.getName());
         } else {
             System.out.println("La créature n'a pas été trouvée.");
         }
