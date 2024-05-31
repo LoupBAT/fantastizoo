@@ -9,6 +9,7 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     private static final int DEFAULT_INCUBATION_PERIOD = 5;
     private static final String[] NAMES = {"Fawkes", "Pyro", "Blaze", "Ember", "Flare", "Inferno", "Sparky", "Ash"};
     private Enclosure enclosure;
+    private int rebornCount = 0;
 
     // Constructor
     public Phoenix(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
@@ -56,5 +57,28 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
             this.enclosure.addCreature(babyPhoenix);
         }
         System.out.println("Bébé phénix ajouté au zoo: " + babyPhoenix.getName());
+    }
+
+    @Override
+    public void reborn() {
+        if (canReborn()) {
+            rebornCount++;
+            System.out.println(this.getName() + " renaît de ses cendres !");
+            resetToBabyState();
+        } else {
+            System.out.println(this.getName() + " ne peut plus renaître.");
+        }
+    }
+
+    @Override
+    public boolean canReborn() {
+        return rebornCount < MAX_REBORN_COUNT;
+    }
+
+    private void resetToBabyState() {
+        this.setAge(0);
+        this.setWeight(generateRandomWeight(1.0, 3.0));
+        this.setHeight(generateRandomHeight(0.2, 0.5));
+        this.setHealth(100);
     }
 }
