@@ -1,5 +1,6 @@
 package fr.g4zoo.fantastizoo.controllers;
 
+import fr.g4zoo.fantastizoo.models.Console;
 import fr.g4zoo.fantastizoo.models.Zoo;
 import fr.g4zoo.fantastizoo.models.ZooMaster;
 import fr.g4zoo.fantastizoo.models.creatures.Creature;
@@ -13,14 +14,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +74,7 @@ public class ZooAppController {
     private Text txt_creatureSleep;
 
     @FXML
-    private AnchorPane creatureInfos;
+    private TextArea showConsol;
 
     @FXML
     private Text enclosure_cleanliness;
@@ -111,7 +110,10 @@ public class ZooAppController {
 
 
     public void initialize(ZooMaster master, String zooName) throws IOException {
-
+        // Display console on screen
+        PrintStream ps = new PrintStream(new Console(showConsol), true, "UTF-8");
+        System.setOut(ps);
+        System.setErr(ps);
         // TEST POUR LES ENCLOS
 
         zoo = new Zoo(zooName, master);
@@ -127,10 +129,6 @@ public class ZooAppController {
 
         Phoenix newPhoenixMale = new Phoenix("Fawkes", secondAviary, 'm', 20, 12.0, 2.2);
         Phoenix newPhoenixFemale = new Phoenix("Pyro", secondAviary, 'f', 18, 9.0, 2.0);
-
-        System.out.println(newPhoenixFemale.getId());
-        System.out.println(newPhoenixMale.getId());
-        System.out.println(phoenixFemale.getId());
 
         zoo.addEnclosure(aviary);
         zoo.addEnclosure(secondAviary);

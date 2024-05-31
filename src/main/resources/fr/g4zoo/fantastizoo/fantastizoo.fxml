@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,7 +22,7 @@
     <children>
         <SplitPane dividerPositions="0.25111358574610243, 0.7321826280623608" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <items>
-                <AnchorPane prefHeight="691.0" prefWidth="392.0">
+                <AnchorPane prefHeight="785.0" prefWidth="228.0">
                     <children>
                         <Label alignment="CENTER" layoutX="16.0" layoutY="115.0" minWidth="60.0" prefHeight="5.0" prefWidth="61.0" style="&#10;" text="Enclos" wrapText="false">
                             <textFill>
@@ -56,8 +57,8 @@
                     <content>
                         <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="772.0" prefWidth="571.0">
                             <children>
-                        <ListView fx:id="creatureListView" layoutX="12.0" layoutY="14.0" prefHeight="345.0" prefWidth="548.0" />
-                        <AnchorPane fx:id="creaturInfos" layoutX="16.0" layoutY="372.0" prefHeight="396.0" prefWidth="526.0">
+                        <ListView fx:id="creatureListView" layoutX="12.0" layoutY="14.0" prefHeight="211.0" prefWidth="548.0" />
+                        <AnchorPane fx:id="creaturInfos" layoutX="14.0" layoutY="231.0" prefHeight="396.0" prefWidth="526.0">
                            <children>
                               <Text fx:id="txt_life" layoutX="313.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                               <Text fx:id="txt_satiety" layoutX="318.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="  " />
@@ -108,7 +109,7 @@
                             </children></AnchorPane>
                     </content>
                 </ScrollPane>
-                <AnchorPane>
+                <AnchorPane prefHeight="785.0" prefWidth="218.0">
                     <children>
                         <Label alignment="CENTER" layoutX="26.0" layoutY="48.0" style="&#10;" text="Actions sur l'enclos" textAlignment="CENTER" textFill="$x2" wrapText="false">
                             <font>
@@ -169,6 +170,7 @@
                             <Button layoutY="74.0" mnemonicParsing="false" onAction="#onClickHeal" text="Soigner" />
                             <Button layoutX="67.0" layoutY="74.0" mnemonicParsing="false" onAction="#onClickTrain" text="Entraîner" />
                         </AnchorPane>
+                  <TextArea fx:id="showConsol" layoutX="20.0" layoutY="439.0" prefHeight="324.0" prefWidth="275.0" />
                     </children>
                 </AnchorPane>
             </items>

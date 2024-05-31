@@ -59,7 +59,7 @@ public class Zoo {
     public void addEnclosure(Enclosure enclosure) {
         if (enclosures.size() < maxEnclosures) {
             enclosures.add(enclosure);
-            System.out.println("Enclosure added to the zoo: " + enclosure.getName());
+            System.out.println("Enclos ajouté au zoo: " + enclosure.getName());
         } else {
             System.out.println("Cannot add enclosure. Maximum enclosures reached.");
         }
