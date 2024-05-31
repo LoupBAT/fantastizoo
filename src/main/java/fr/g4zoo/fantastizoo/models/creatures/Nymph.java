@@ -7,6 +7,7 @@ public class Nymph extends Viviparous implements Reborner {
     private static final int DEFAULT_GESTATION_PERIOD = 6;
     private static final String[] NAMES = {"Astra", "Luna", "Selene", "Nyx", "Aurora", "Celeste", "Eos", "Nova"};
     private Enclosure enclosure;
+    private int rebornCount = 0;
 
     // Constructor
     public Nymph(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
@@ -49,5 +50,28 @@ public class Nymph extends Viviparous implements Reborner {
             this.enclosure.addCreature(babyNymph);
         }
         System.out.println("Bébé nymphe ajouté au zoo : " + babyNymph.getName());
+    }
+
+    @Override
+    public void reborn() {
+        if (canReborn()) {
+            rebornCount++;
+            System.out.println(this.getName() + " renaît de ses cendres !");
+            resetToBabyState();
+        } else {
+            System.out.println(this.getName() + " ne peut plus renaître.");
+        }
+    }
+
+    @Override
+    public boolean canReborn() {
+        return rebornCount < MAX_REBORN_COUNT;
+    }
+
+    private void resetToBabyState() {
+        this.setAge(0);
+        this.setWeight(generateRandomWeight(2.0, 4.0));
+        this.setHeight(generateRandomHeight(0.5, 1.0));
+        this.setHealth(100);
     }
 }
