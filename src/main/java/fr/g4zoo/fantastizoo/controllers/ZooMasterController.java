@@ -58,17 +58,10 @@ public class ZooMasterController {
         String nameValue = name.getText();
         int ageValue = Integer.parseInt(Age.getText());
         Character genderValue = men.isSelected() ? 'h' : (women.isSelected() ? 'f' : null);
-        int hpValue = 3;
-        int actionValue = 5;
         String zooValue = zoo.getText();
 
         if (nameValue != null && !nameValue.isEmpty() && ageValue != 0 && zooValue != null && !zooValue.isEmpty()) {
-            ZooMaster master = new ZooMaster();
-            master.setName(nameValue);
-            master.setAge(ageValue);
-            master.setGender(genderValue);
-            master.setHp(hpValue);
-            master.setAction(actionValue);
+            ZooMaster master = new ZooMaster(nameValue, genderValue, ageValue);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/g4zoo/fantastizoo/fantastizoo.fxml"));
             Parent root = loader.load();
@@ -83,4 +76,5 @@ public class ZooMasterController {
             System.out.println("Veuillez remplir tous les champs !");
         }
     }
+
 }

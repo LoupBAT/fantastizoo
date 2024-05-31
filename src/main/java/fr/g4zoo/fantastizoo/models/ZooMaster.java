@@ -5,10 +5,17 @@ public class ZooMaster {
     private String name;
     private Character gender;
     private int age;
-    private int hp;
-    private int action;
+    private int hp = 3;
+    private int action =5;
 
-    //GETTERS
+    // Constructor
+    public ZooMaster(String name, Character gender, int age) {
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+    }
+
+    // GETTERS
 
     public String getName() {
         return name;
@@ -30,7 +37,7 @@ public class ZooMaster {
         return action;
     }
 
-    //SETTERS
+    // SETTERS
 
     public void setName(String name) {
         this.name = name;

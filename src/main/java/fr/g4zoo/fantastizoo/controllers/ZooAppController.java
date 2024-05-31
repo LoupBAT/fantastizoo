@@ -10,6 +10,7 @@ import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
 import fr.g4zoo.fantastizoo.models.enclosures.Aviary;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -42,6 +44,10 @@ public class ZooAppController {
 
     @FXML
     private ProgressBar enclosure_cleanliness_bar;
+
+    @FXML
+    private Text txt_enclosureName;
+
 
     @FXML
     private ProgressBar creature_life_bar;
@@ -81,6 +87,13 @@ public class ZooAppController {
 
     @FXML
     private Label zooName;
+
+    @FXML
+    private Label zooMasterName;
+
+    @FXML
+    private Label zooMasterHp;
+
 
     @FXML
     public ChoiceBox<String> enclosureListTransfer;
@@ -128,10 +141,11 @@ public class ZooAppController {
         PrintStream ps = new PrintStream(new Console(showConsol), true, "UTF-8");
         System.setOut(ps);
         System.setErr(ps);
-        // TEST POUR LES ENCLOS
 
         zoo = new Zoo(zooName, master);
         this.zooName.setText(zooName);
+        this.zooMasterName.setText(master.getName());
+        this.zooMasterHp.setText(master.getHp() + "");
 
         Aviary aviary = new Aviary("Phénix 1", 500.0, 20.0);
 
@@ -147,8 +161,6 @@ public class ZooAppController {
         zoo.addEnclosure(aviary);
         zoo.addEnclosure(secondAviary);
 
-        // FIN DU TEST POUR LES ENCLOS
-
         updateUI();
 
         enclosureListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -159,7 +171,8 @@ public class ZooAppController {
                     enclosure_capacity.setText(selectedEnclosure.getCreatureNumber() + "/" + selectedEnclosure.getMaxCapacity());
                     enclosure_cleanliness_bar.setProgress((double) selectedEnclosure.getCleanliness() / 100.0);
                     enclosure_cleanliness.setText(selectedEnclosure.getCleanliness() > 75 ? "Propre" : selectedEnclosure.getCleanliness() > 50 ? "Correct" : "Sale");
-                    updateCreatureListView((Aviary) selectedEnclosure);
+                    txt_enclosureName.setText(selectedEnclosure.getName());
+                    updateCreatureListView(selectedEnclosure);
                 }
             }
         });
