@@ -289,6 +289,7 @@ public class ZooAppController {
             reduceWeight(0.3);
             System.out.println(getSelectedCreature().getName() + " s'entraine.");
         }
+        updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
     }
 
     private void reduceWeight(double amount) {

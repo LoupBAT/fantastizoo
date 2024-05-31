@@ -153,7 +153,8 @@ public abstract class Creature {
         if (this.getSatiety() > 100) {
             int newHealth = this.getHealth() - 5;
             this.setHealth(newHealth);
-            System.out.println("Attention "+this.getName() + " perd de la vie à force de trop manger !");
+            System.out.println("Attention "+this.getName() + " mange trop -5PV !");
+            this.setSatiety(100);
         }
 
         if (this.getWeight() < 0) {
