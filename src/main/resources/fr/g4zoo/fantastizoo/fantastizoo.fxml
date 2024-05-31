@@ -115,8 +115,8 @@
                             <font>
                                 <Font name="AppleGothic Regular" size="13.0" />
                             </font></Label>
-                        <Button layoutX="35.0" layoutY="252.0" mnemonicParsing="false" text="Nettoyer l'enclos" />
-                        <Button layoutX="160.0" layoutY="253.0" mnemonicParsing="false" text="Nourrir les créatures" />
+                        <Button layoutX="35.0" layoutY="252.0" mnemonicParsing="false" onAction="#onClickClean" text="Nettoyer l'enclos" />
+                        <Button layoutX="160.0" layoutY="253.0" mnemonicParsing="false" onAction="#onClickFeed" text="Nourrir les créatures" />
                         <Text layoutX="37.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aire :">
                             <font>
                                 <Font name="AppleGothic Regular" size="13.0" />
@@ -170,7 +170,7 @@
                             <Button layoutY="74.0" mnemonicParsing="false" onAction="#onClickHeal" text="Soigner" />
                             <Button layoutX="67.0" layoutY="74.0" mnemonicParsing="false" onAction="#onClickTrain" text="Entraîner" />
                         </AnchorPane>
-                  <TextArea fx:id="showConsol" layoutX="20.0" layoutY="439.0" prefHeight="324.0" prefWidth="275.0" />
+                  <TextArea fx:id="showConsol" layoutX="20.0" layoutY="447.0" prefHeight="324.0" prefWidth="275.0" />
                     </children>
                 </AnchorPane>
             </items>

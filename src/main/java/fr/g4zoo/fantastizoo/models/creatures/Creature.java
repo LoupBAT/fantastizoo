@@ -139,11 +139,29 @@ public abstract class Creature {
     // METHODS
 
     public void eat(int satietyPoint) {
-        this.setSatiety(this.getSatiety() + satietyPoint);
-        this.setHungry(this.getSatiety() <= 40);
-        this.setWeight(this.getWeight() + (this.getSatiety() - 100));
-        this.setHealth(this.getHealth() - (this.getSatiety() - 100));
-        this.setSatiety(Math.min(this.getSatiety(), 100));
+        int newSatiety = this.getSatiety() + satietyPoint;
+        this.setSatiety(newSatiety);
+
+        if (this.getSatiety() <= 40) {
+            this.setHungry(true);
+        }
+
+        if (this.getSatiety() <= 100) {
+            this.setWeight(this.getWeight() + satietyPoint * 0.1);
+        }
+
+        if (this.getSatiety() > 100) {
+            int newHealth = this.getHealth() - 5;
+            this.setHealth(newHealth);
+            System.out.println("Attention "+this.getName() + " perd de la vie à force de trop manger !");
+        }
+
+        if (this.getWeight() < 0) {
+            this.setWeight(0);
+        }
+        if (this.getHealth() < 0) {
+            this.setHealth(0);
+        }
     }
 
     public void makeSound(String soundUrl) {

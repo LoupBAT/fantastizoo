@@ -206,6 +206,39 @@ public class ZooAppController {
         });
     }
 
+    private void updateSelectedEnclosure(String enclosureName) {
+        if (enclosureName != null) {
+            selectedEnclosure = zoo.getEnclosureByName(enclosureName);
+            if (selectedEnclosure != null) {
+                enclosure_area.setText(selectedEnclosure.getArea() + " m2");
+                enclosure_capacity.setText(selectedEnclosure.getCreatureNumber() + "/" + selectedEnclosure.getMaxCapacity());
+                enclosure_cleanliness_bar.setProgress((double) selectedEnclosure.getCleanliness() / 100.0);
+                enclosure_cleanliness.setText(selectedEnclosure.getCleanliness() > 75 ? "Propre" : selectedEnclosure.getCleanliness() > 50 ? "Correct" : "Sale");
+                updateCreatureListView((Aviary) selectedEnclosure);
+            }
+        }
+    }
+
+    private void updateSelectedCreature(String creatureInfo) {
+        if (creatureInfo != null) {
+            int selectedCreatureId = creatureIdMap.get(creatureInfo);
+            selectedCreature = selectedEnclosure.getCreatureById(selectedCreatureId);
+            updateEnclosureListTransfer();
+
+            creature_life_bar.setProgress((double) selectedCreature.getHealth() / 100.0);
+            creature_satiety_bar.setProgress((double) selectedCreature.getSatiety() / 100.0);
+
+            txt_life.setText("" + selectedCreature.getHealth());
+            txt_satiety.setText("" + selectedCreature.getSatiety());
+            txt_creatureName.setText(selectedCreature.getName());
+            txt_creatureAge.setText(selectedCreature.getAge() + " ans");
+            txt_creatureHeight.setText(selectedCreature.getHeight() + " m");
+            txt_creatureWeight.setText(selectedCreature.getWeight() + " kg");
+            txt_creatureGender.setText(selectedCreature.getGender() == 'm' ? "Male" : "Femelle");
+            txt_creatureSleep.setText(selectedCreature.isAsleep() ? "Dort" : "Eveillé");
+        }
+    }
+
     void updateEnclosureListTransfer() {
         if (this.getZoo() != null) {
             Zoo zoo = this.getZoo();
@@ -223,19 +256,35 @@ public class ZooAppController {
     @FXML
     public void onClickHeal(ActionEvent event) {
         this.getSelectedCreature().healing(40);
+        System.out.println(getSelectedCreature().getName() + " a été soigné.");
+        updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     public void onClickTrain(ActionEvent event) {
         if (this.getSelectedCreature() instanceof Flyer) {
             ((Flyer) this.getSelectedCreature()).fly();
+            reduceWeight(0.5);
         } else if (this.getSelectedCreature() instanceof Swimmer ) {
             ((Swimmer) this.getSelectedCreature()).swim();
-        } else {
+            reduceWeight(0.5);
+        } else if (this.getSelectedCreature() instanceof Runner ) {
             ((Runner) this.getSelectedCreature()).run();
+            reduceWeight(0.5);
+        } else {
+            reduceWeight(0.3);
+            System.out.println(getSelectedCreature().getName() + " s'entraine.");
         }
     }
 
+    private void reduceWeight(double amount) {
+        double currentWeight = this.getSelectedCreature().getWeight();
+        double newWeight = currentWeight - amount;
+        if (newWeight < 0) {
+            newWeight = 0;
+        }
+        this.getSelectedCreature().setWeight(newWeight);
+    }
 
 
     @FXML
@@ -245,5 +294,21 @@ public class ZooAppController {
         updateCreatureListView(getSelectedEnclosure());
     }
 
+    @FXML
+    public void onClickClean(ActionEvent actionEvent) {
+        int cleanliness = getSelectedEnclosure().getCleanliness();
+        if (cleanliness == 100) {
+            System.out.println("L'enclos est déjà propre.");
+        } else {
+            getSelectedEnclosure().getCleaned();
+            updateSelectedEnclosure(getSelectedEnclosure().getName());
+        }
+    }
+
+    @FXML
+    public void onClickFeed(ActionEvent actionEvent) {
+        getSelectedEnclosure().feedCreatures();
+        updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
+    }
 
 }
