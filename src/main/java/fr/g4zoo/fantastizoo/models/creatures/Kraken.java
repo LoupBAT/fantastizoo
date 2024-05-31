@@ -19,6 +19,7 @@ public class Kraken extends Oviparous implements Swimmer {
         this.setAge(age);
         this.setWeight(weight);
         this.setHeight(height);
+        this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
 

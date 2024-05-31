@@ -26,8 +26,7 @@ public class Zoo {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Starting timer");
-                // TODO: Tâche appelée périodiquement pour la mise à jour de tous les enclos
+
             }
         };
         timer.schedule(timerTask, 0, 15000);
@@ -60,7 +59,7 @@ public class Zoo {
     public void addEnclosure(Enclosure enclosure) {
         if (enclosures.size() < maxEnclosures) {
             enclosures.add(enclosure);
-            System.out.println("Enclosure added to the zoo: " + enclosure.getName());
+            System.out.println("Enclos ajouté au zoo: " + enclosure.getName());
         } else {
             System.out.println("Cannot add enclosure. Maximum enclosures reached.");
         }
@@ -76,10 +75,6 @@ public class Zoo {
     }
 
     public ArrayList<Enclosure> getAllEnclosures() {
-        ArrayList<Enclosure> allEnclosures = new ArrayList<>();
-        for (Enclosure enclosure : enclosures) {
-            allEnclosures.add(enclosure);
-        }
-        return allEnclosures;
+        return new ArrayList<>(enclosures);
     }
 }
