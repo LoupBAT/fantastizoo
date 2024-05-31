@@ -20,6 +20,7 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
         this.setAge(age);
         this.setWeight(weight);
         this.setHeight(height);
+        this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
 

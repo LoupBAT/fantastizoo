@@ -17,6 +17,7 @@ public class Lycanthrope extends Viviparous implements Runner {
         this.setAge(age);
         this.setWeight(weight);
         this.setHeight(height);
+        this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
 

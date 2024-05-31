@@ -18,6 +18,7 @@ public class Nymph extends Viviparous implements Reborner {
         this.setAge(age);
         this.setWeight(weight);
         this.setHeight(height);
+        this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
 

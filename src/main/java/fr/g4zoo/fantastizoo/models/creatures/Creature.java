@@ -2,6 +2,10 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 
+import java.io.IOException;
+import java.net.URL;
+import javax.sound.sampled.*;
+
 import java.util.Random;
 
 public abstract class Creature {
@@ -19,6 +23,7 @@ public abstract class Creature {
 
     private char gender;
     private int age;
+    private int ageMax;
     private double weight;
     private double height;
 
@@ -54,6 +59,10 @@ public abstract class Creature {
 
     public int getAge() {
         return age;
+    }
+
+    public int getAgeMax() {
+        return ageMax;
     }
 
     public double getWeight() {
@@ -96,6 +105,10 @@ public abstract class Creature {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void setAgeMax(int ageMax) {
+        this.ageMax = ageMax;
     }
 
     public void setWeight(double weight) {
@@ -158,22 +171,22 @@ public abstract class Creature {
         this.setAsleep(false);
     }
 
-    public void growOld(int limitAge){
+    public void growOld() {
         this.setAge(this.getAge() + 1);
 
-        // TODO Tâche 1.7: Méthode growOld()
-
-        /*
-        if(this.getAge() > limitAge){
-            if (this instanceof Reborner){
-                ((Reborner) this).reborn();
-            }else {
+        if (this.getAge() > ageMax) {
+            if (this instanceof Reborner) {
+                if (((Reborner) this).canReborn()) {
+                    ((Reborner) this).reborn();
+                } else {
+                    this.setHealth(0);
+                }
+            } else {
                 this.setHealth(0);
             }
         }
-        */
-
     }
+
 
     public void periodicUpdate(){
 
@@ -195,5 +208,10 @@ public abstract class Creature {
 
     protected double generateRandomHeight(double min, double max) {
         return min + (max - min) * RANDOM.nextDouble();
+    }
+
+    protected int generateRandomAgeMax() {
+        Random random = new Random();
+        return random.nextInt(131) + 20;
     }
 }
