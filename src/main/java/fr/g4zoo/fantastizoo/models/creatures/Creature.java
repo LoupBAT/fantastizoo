@@ -134,9 +134,15 @@ public abstract class Creature {
     }
 
     public void makeSound(String soundUrl) {
-
-        // TODO Tâche 1.3: Méthode makeSound()
-
+        try {
+            URL url = new URL(soundUrl);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     public void healing(int healingPoint) {

@@ -1,6 +1,7 @@
 module fr.g4zoo.fantastizoo {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens fr.g4zoo.fantastizoo to javafx.fxml;
