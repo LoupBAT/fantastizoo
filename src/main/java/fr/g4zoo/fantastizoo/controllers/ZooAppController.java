@@ -106,10 +106,24 @@ public class ZooAppController {
         return selectedCreature;
     }
 
-
-
+    Thread welcomeThread = new Thread(() -> {
+        try {
+            Thread.sleep(1000);
+            System.out.println("Bienvenue sur Fantastizoo !");
+            Thread.sleep(1000);
+            System.out.println("Fantastizoo est une application où vous gérez \nvotre propre zoo fantastique rempli de créatures \nincroyables.");
+            Thread.sleep(2000);
+            System.out.println("Votre objectif est de collecter un maximum de \ncréatures différentes, de les nourrir, de les \nentraîner et de veiller à leur bien-être.");
+            Thread.sleep(2000);
+            System.out.println("Amusez-vous à découvrir et à interagir avec les \ndifférentes espèces de créatures et à construire le \nzoo de vos rêves !");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    });
 
     public void initialize(ZooMaster master, String zooName) throws IOException {
+        welcomeThread.start();
+
         // Display console on screen
         PrintStream ps = new PrintStream(new Console(showConsol), true, "UTF-8");
         System.setOut(ps);
