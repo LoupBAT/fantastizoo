@@ -27,7 +27,7 @@ public abstract class Creature {
     private double weight;
     private double height;
 
-    private int satiety = 40;
+    private int satiety = 100;
     private boolean isHungry;
 
     private int health = 100;
