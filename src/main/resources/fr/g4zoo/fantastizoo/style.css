@@ -1,0 +1,8 @@
+/* styles.css */
+.progress-bar-life .bar {
+    -fx-accent: red;
+}
+
+.progress-bar-satiety .bar {
+    -fx-accent: #7d4e2f;
+}

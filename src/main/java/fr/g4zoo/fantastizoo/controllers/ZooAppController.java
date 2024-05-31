@@ -17,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -42,6 +43,39 @@ public class ZooAppController {
 
     @FXML
     private ProgressBar enclosure_cleanliness_bar;
+
+    @FXML
+    private ProgressBar creature_life_bar;
+
+    @FXML
+    private Text txt_life;
+
+    @FXML
+    private ProgressBar creature_satiety_bar;
+
+    @FXML
+    private Text txt_satiety;
+
+    @FXML
+    private Text txt_creatureName;
+
+    @FXML
+    private Text txt_creatureAge;
+
+    @FXML
+    private Text txt_creatureHeight;
+
+    @FXML
+    private Text txt_creatureWeight;
+
+    @FXML
+    private Text txt_creatureGender;
+
+    @FXML
+    private Text txt_creatureSleep;
+
+    @FXML
+    private AnchorPane creatureInfos;
 
     @FXML
     private Text enclosure_cleanliness;
@@ -124,10 +158,28 @@ public class ZooAppController {
                 int selectedCreatureId = creatureIdMap.get(newValue);
                 selectedCreature = selectedEnclosure.getCreatureById(selectedCreatureId);
                 updateEnclosureListTransfer();
+
+                creature_life_bar.setProgress((double) selectedCreature.getHealth() / 100.0);
+                creature_satiety_bar.setProgress((double) selectedCreature.getSatiety() / 100.0);
+
+                txt_life.setText(""+selectedCreature.getHealth());
+                txt_satiety.setText(""+selectedCreature.getSatiety());
+                txt_creatureName.setText(selectedCreature.getName());
+                txt_creatureAge.setText(selectedCreature.getAge()+" ans");
+                txt_creatureHeight.setText(selectedCreature.getHeight()+" m");
+                txt_creatureWeight.setText(selectedCreature.getWeight()+" kg");
+                if (selectedCreature.getGender() == 'm') {
+                    txt_creatureGender.setText("Male");
+                } else {
+                    txt_creatureGender.setText("Femelle");
+                }
+                if (selectedCreature.isAsleep()) {
+                    txt_creatureSleep.setText("Dort");
+                } else {
+                    txt_creatureSleep.setText("Eveillé");
+                }
             }
         });
-
-
     }
 
     private void updateUI() {
@@ -149,9 +201,8 @@ public class ZooAppController {
         creatureListView.getItems().clear();
         creatureIdMap.clear();
         enclosure.getCreatures().forEach(creature -> {
-            String creatureInfo = String.format("Nom: %s, Genre: %c, Âge: %d, Poids: %.2f kg, Taille: %.2f m, Satiété: %d, Vie: %d, Est endormi: %s",
-                    creature.getName(), creature.getGender(), creature.getAge(), creature.getWeight(), creature.getHeight(),
-                    creature.getSatiety(), creature.getHealth(), creature.isAsleep() ? "Oui" : "Non");
+            String creatureInfo = String.format("Nom: %s",
+                    creature.getName());
             creatureListView.getItems().add(creatureInfo);
             creatureIdMap.put(creatureInfo, creature.getId());
         });

@@ -6,7 +6,7 @@ import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
 
 public class Dragon  {
-    
+
     public void run() {
 
     }
