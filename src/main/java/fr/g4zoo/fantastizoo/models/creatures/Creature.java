@@ -3,6 +3,8 @@ package fr.g4zoo.fantastizoo.models.creatures;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.io.IOException;
 import java.net.URL;
 import javax.sound.sampled.*;
@@ -113,11 +115,11 @@ public abstract class Creature {
     }
 
     public void setWeight(double weight) {
-        this.weight = weight;
+        this.weight = roundToTwoDecimalPlaces(weight);
     }
 
     public void setHeight(double height) {
-        this.height = height;
+        this.height = roundToTwoDecimalPlaces(height);
     }
 
     public void setSatiety(int satiety) {
@@ -141,6 +143,12 @@ public abstract class Creature {
     }
 
     // METHODS
+
+    private double roundToTwoDecimalPlaces(double value) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
     public void eat(int satietyPoint) {
         int newSatiety = this.getSatiety() + satietyPoint;
