@@ -22,21 +22,7 @@ public class Unicorn extends Viviparous implements Runner {
     }
 
     @Override
-    public void giveBirth() {
-        if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
-            return;
-        }
-
-        System.out.println(this.getName() + " est enceinte.");
-        simulateGestationPeriod(() -> {
-            Unicorn babyUnicorn = createBabyUnicorn();
-            System.out.println(this.getName() + " a donné naissance à un bébé licorne : " + babyUnicorn.getName() + " !");
-            addBabyUnicornToZoo(babyUnicorn);
-        });
-    }
-
-    private Unicorn createBabyUnicorn() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(3.0, 5.0);
@@ -45,11 +31,12 @@ public class Unicorn extends Viviparous implements Runner {
         return new Unicorn(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyUnicornToZoo(Unicorn babyUnicorn) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyUnicorn);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé licorne ajouté au zoo : " + babyUnicorn.getName());
+        System.out.println("Bébé licorne ajouté au zoo : " + baby.getName());
     }
 
     @Override

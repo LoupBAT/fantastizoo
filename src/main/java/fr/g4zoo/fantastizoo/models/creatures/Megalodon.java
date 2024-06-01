@@ -23,26 +23,12 @@ public class Megalodon extends Oviparous implements Swimmer {
     }
 
     @Override
-    public void layEgg() {
-        if (this.getGender() != 'f' || this.getAge() < 10) {
-            System.out.println(this.getName() + " ne peut pas pondre d'œuf.");
-            return;
-        }
-
-        System.out.println(this.getName() + " a pondu un œuf.");
-        simulateIncubationPeriod(() -> {
-            Megalodon babyMegalodon = createBabyMegalodon();
-            System.out.println("L'œuf de " + getName() + " a éclos et un bébé megalodon est né : " + babyMegalodon.getName() + " !");
-            addBabyMegalodonToZoo(babyMegalodon);
-        });
-    }
-
-    @Override
     public void swim() {
         System.out.println(this.getName() + " nage !");
     }
 
-    private Megalodon createBabyMegalodon() {
+    @Override
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(500.0, 700.0);
@@ -51,10 +37,11 @@ public class Megalodon extends Oviparous implements Swimmer {
         return new Megalodon(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyMegalodonToZoo(Megalodon babyMegalodon) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyMegalodon);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé megalodon ajouté au zoo: " + babyMegalodon.getName());
+        System.out.println("Bébé dragon ajouté au zoo: " + baby.getName());
     }
 }

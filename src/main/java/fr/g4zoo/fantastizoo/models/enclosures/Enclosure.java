@@ -4,6 +4,7 @@ import fr.g4zoo.fantastizoo.models.creatures.Creature;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Enclosure {
 
@@ -13,6 +14,7 @@ public class Enclosure {
     private int creatureNumber;
     private int cleanliness;
     private List<Creature> creatures;
+    private static final Random RANDOM = new Random();
 
     // Constructor
     public Enclosure(String name, double area) {
@@ -114,5 +116,13 @@ public class Enclosure {
             }
         }
         return null;
+    }
+
+    public void periodicUpdate() {
+        int decrease = RANDOM.nextInt(11);
+        cleanliness -= decrease;
+        if (cleanliness < 0) {
+            cleanliness = 0;
+        }
     }
 }

@@ -22,21 +22,7 @@ public class Lycanthrope extends Viviparous implements Runner {
     }
 
     @Override
-    public void giveBirth() {
-        if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
-            return;
-        }
-
-        System.out.println(this.getName() + " est enceinte.");
-        simulateGestationPeriod(() -> {
-            Lycanthrope babyLycanthrope = createBabyLycanthrope();
-            System.out.println(this.getName() + " a donné naissance à un bébé lycanthrope : " + babyLycanthrope.getName() + " !");
-            addBabyLycanthropeToZoo(babyLycanthrope);
-        });
-    }
-
-    private Lycanthrope createBabyLycanthrope() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(3.0, 5.0);
@@ -45,11 +31,12 @@ public class Lycanthrope extends Viviparous implements Runner {
         return new Lycanthrope(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyLycanthropeToZoo(Lycanthrope babyLycanthrope) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyLycanthrope);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé lycanthrope ajouté au zoo : " + babyLycanthrope.getName());
+        System.out.println("Bébé lycanthrope ajouté au zoo : " + baby.getName());
     }
 
     @Override

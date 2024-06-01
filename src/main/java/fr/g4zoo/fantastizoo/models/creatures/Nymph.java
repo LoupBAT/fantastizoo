@@ -23,21 +23,7 @@ public class Nymph extends Viviparous implements Reborner {
     }
 
     @Override
-    public void giveBirth() {
-        if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
-            return;
-        }
-
-        System.out.println(this.getName() + " est enceinte.");
-        simulateGestationPeriod(() -> {
-            Nymph babyNymph = createBabyNymph();
-            System.out.println(this.getName() + " a donné naissance à une bébé nymphe : " + babyNymph.getName() + " !");
-            addBabyNymphToZoo(babyNymph);
-        });
-    }
-
-    private Nymph createBabyNymph() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(2.0, 4.0);
@@ -46,11 +32,12 @@ public class Nymph extends Viviparous implements Reborner {
         return new Nymph(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyNymphToZoo(Nymph babyNymph) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyNymph);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé nymphe ajouté au zoo : " + babyNymph.getName());
+        System.out.println("Bébé nymphe ajouté au zoo : " + baby.getName());
     }
 
     @Override

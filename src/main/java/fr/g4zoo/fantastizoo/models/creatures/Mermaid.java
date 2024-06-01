@@ -22,21 +22,7 @@ public class Mermaid extends Viviparous implements Swimmer {
     }
 
     @Override
-    public void giveBirth() {
-        if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
-            return;
-        }
-
-        System.out.println(this.getName() + " est enceinte.");
-        simulateGestationPeriod(() -> {
-            Mermaid babyMermaid = createBabyMermaid();
-            System.out.println(this.getName() + " a donné naissance à une bébé sirène : " + babyMermaid.getName() + " !");
-            addBabyMermaidToZoo(babyMermaid);
-        });
-    }
-
-    private Mermaid createBabyMermaid() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(2.0, 4.0);
@@ -45,11 +31,12 @@ public class Mermaid extends Viviparous implements Swimmer {
         return new Mermaid(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyMermaidToZoo(Mermaid babyMermaid) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyMermaid);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé sirène ajouté au zoo : " + babyMermaid.getName());
+        System.out.println("Bébé sirène ajouté au zoo : " + baby.getName());
     }
 
     @Override

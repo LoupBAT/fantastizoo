@@ -24,26 +24,12 @@ public class Kraken extends Oviparous implements Swimmer {
     }
 
     @Override
-    public void layEgg() {
-        if (this.getGender() != 'f' || this.getAge() < 10) {
-            System.out.println(this.getName() + " ne peut pas pondre d'œuf.");
-            return;
-        }
-
-        System.out.println(this.getName() + " a pondu un œuf.");
-        simulateIncubationPeriod(() -> {
-            Kraken babyKraken = createBabyKraken();
-            System.out.println("L'œuf de " + getName() + " a éclos et un bébé kraken est né : " + babyKraken.getName() + " !");
-            addBabyKrakenToZoo(babyKraken);
-        });
-    }
-
-    @Override
     public void swim() {
         System.out.println(this.getName() + " nage !");
     }
 
-    private Kraken createBabyKraken() {
+    @Override
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(2000.0, 3000.0);
@@ -52,10 +38,11 @@ public class Kraken extends Oviparous implements Swimmer {
         return new Kraken(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyKrakenToZoo(Kraken babyKraken) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyKraken);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé kraken ajouté au zoo: " + babyKraken.getName());
+        System.out.println("Bébé kraken ajouté au zoo: " + baby.getName());
     }
 }

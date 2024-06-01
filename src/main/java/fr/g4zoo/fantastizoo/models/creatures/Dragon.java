@@ -26,26 +26,12 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
     }
 
     @Override
-    public void layEgg() {
-        if (this.getGender() != 'f' || this.getAge() < 20) {
-            System.out.println(this.getName() + " ne peut pas pondre d'œuf.");
-            return;
-        }
-
-        System.out.println(this.getName() + " a pondu un œuf.");
-        simulateIncubationPeriod(() -> {
-            Dragon babyDragon = createBabyDragon();
-            System.out.println("L'œuf de " + getName() + " a éclos et un bébé dragon est né : " + babyDragon.getName() + " !");
-            addBabyDragonToZoo(babyDragon);
-        });
-    }
-
-    @Override
     public void fly() {
         System.out.println(this.getName() + " s'envole majestueusement !");
     }
 
-    private Dragon createBabyDragon() {
+    @Override
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(10.0, 50.0);
@@ -54,11 +40,12 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
         return new Dragon(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyDragonToZoo(Dragon babyDragon) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyDragon);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé dragon ajouté au zoo: " + babyDragon.getName());
+        System.out.println("Bébé dragon ajouté au zoo: " + baby.getName());
     }
 
     @Override

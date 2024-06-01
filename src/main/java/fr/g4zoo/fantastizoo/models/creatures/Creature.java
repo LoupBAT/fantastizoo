@@ -15,23 +15,19 @@ public abstract class Creature {
     // ATTRIBUTES
 
     private static int nextId = 1;
-
     private final int id;
-
     private String name;
     private String species;
-
     private char gender;
     private int age;
     private int ageMax;
     private double weight;
     private double height;
-
     private int satiety = 100;
     private boolean isHungry;
-
     private int health = 100;
     private boolean isAsleep;
+    private boolean isSick;
 
     // CONSTRUCTORS
 
@@ -89,6 +85,10 @@ public abstract class Creature {
         return isAsleep;
     }
 
+    public boolean isSick() {
+        return isAsleep;
+    }
+
     // SETTERS
 
     public void setName(String name) {
@@ -135,6 +135,9 @@ public abstract class Creature {
         isAsleep = asleep;
     }
 
+    public void setSick(boolean asleep) {
+        isAsleep = asleep;
+    }
 
     // METHODS
 
@@ -206,11 +209,47 @@ public abstract class Creature {
         }
     }
 
+    public void periodicUpdate() {
+        growOld();
 
-    public void periodicUpdate(){
+        if (!isAsleep && RANDOM.nextInt(100) < 10) {
+            sleep();
+            System.out.println(name + " s'est endormi.");
+        } else if (isAsleep && RANDOM.nextInt(100) < 20) {
+            wakeUp();
+            System.out.println(name + " s'est réveillé.");
+        }
 
-        // TODO Tâche 1.8: Méthode periodicUpdate()
+        if (!isSick && RANDOM.nextInt(100) < 5) {
+            setSick(true);
+            System.out.println(name + " est tombé malade.");
+        }
 
+        if (isSick) {
+            int newHealth = this.getHealth() - 1;
+            setHealth(newHealth);
+            System.out.println(name + " est malade et perd 1 point de vie.");
+            if (this.getHealth() <= 0) {
+                System.out.println(name + " est mort de maladie.");
+            }
+        }
+
+        int newSatiety = this.getSatiety() - 2;
+        setSatiety(newSatiety);
+        if (this.getSatiety() < 30) {
+            int newHealth = this.getHealth() - 3;
+            setHealth(newHealth);
+            System.out.println(name + " a très faim et perd 3 points de vie.");
+            if (this.getHealth() <= 0) {
+                System.out.println(name + " est mort de faim.");
+            }
+        }
+
+        if (this instanceof Oviparous && RANDOM.nextInt(100) < 5) {
+            ((Oviparous) this).layEgg();
+        } else if (this instanceof Viviparous && RANDOM.nextInt(100) < 5) {
+            ((Viviparous) this).giveBirth();
+        }
     }
 
     protected String generateRandomName(String[] names) {

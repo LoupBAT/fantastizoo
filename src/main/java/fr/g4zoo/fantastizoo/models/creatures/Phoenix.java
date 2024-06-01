@@ -11,7 +11,6 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     private Enclosure enclosure;
     private int rebornCount = 0;
 
-    // Constructor
     public Phoenix(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);
@@ -25,26 +24,7 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     }
 
     @Override
-    public void layEgg() {
-        if (this.getGender() != 'f' || this.getAge() < 10) {
-            System.out.println(this.getName() + " ne peut pas pondre d'œuf.");
-            return;
-        }
-
-        System.out.println(this.getName() + " a pondu un œuf.");
-        simulateIncubationPeriod(() -> {
-            Phoenix babyPhoenix = createBabyPhoenix();
-            System.out.println("L'œuf de " + getName() + " a éclos et un bébé phénix est né : " + babyPhoenix.getName() + " !");
-            addBabyPhoenixToZoo(babyPhoenix);
-        });
-    }
-
-    @Override
-    public void fly() {
-        System.out.println(this.getName() + " s'envole majestueusement !");
-    }
-
-    private Phoenix createBabyPhoenix() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(1.0, 3.0);
@@ -53,11 +33,17 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
         return new Phoenix(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyPhoenixToZoo(Phoenix babyPhoenix) {
+    @Override
+    protected void addBabyToZoo(Creature baby) {
         if (this.enclosure != null) {
-            this.enclosure.addCreature(babyPhoenix);
+            this.enclosure.addCreature(baby);
         }
-        System.out.println("Bébé phénix ajouté au zoo: " + babyPhoenix.getName());
+        System.out.println("Bébé phénix ajouté au zoo: " + baby.getName());
+    }
+
+    @Override
+    public void fly() {
+        System.out.println(this.getName() + " s'envole majestueusement !");
     }
 
     @Override
