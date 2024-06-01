@@ -16,7 +16,6 @@ public abstract class Oviparous extends Creature {
 
     public void layEgg() {
         if (this.getGender() != 'f' || this.getAge() < 10) {
-            System.out.println(this.getName() + " ne peut pas pondre d'œuf.");
             return;
         }
 

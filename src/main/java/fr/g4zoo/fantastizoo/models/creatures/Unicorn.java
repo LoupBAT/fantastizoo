@@ -33,9 +33,6 @@ public class Unicorn extends Viviparous implements Runner {
 
     @Override
     protected void addBabyToZoo(Creature baby) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(baby);
-        }
         System.out.println("Bébé licorne ajouté au zoo : " + baby.getName());
     }
 

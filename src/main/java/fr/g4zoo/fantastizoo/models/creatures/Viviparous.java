@@ -24,12 +24,10 @@ public abstract class Viviparous extends Creature {
 
     public void giveBirth() {
         if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
             return;
         }
 
         if (this.isPregnant) {
-            System.out.println(this.getName() + " est déjà enceinte et ne peut pas retomber enceinte.");
             return;
         }
 

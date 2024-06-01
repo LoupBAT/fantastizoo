@@ -1,6 +1,7 @@
 package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
+import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +28,7 @@ public abstract class Creature {
     private boolean isHungry;
     private int health = 100;
     private boolean isAsleep;
-    private boolean isSick;
+    private boolean isSick = false;
 
     // CONSTRUCTORS
 
@@ -135,8 +136,8 @@ public abstract class Creature {
         isAsleep = asleep;
     }
 
-    public void setSick(boolean asleep) {
-        isAsleep = asleep;
+    public void setSick(boolean issick) {
+        isSick = issick;
     }
 
     // METHODS
@@ -183,6 +184,7 @@ public abstract class Creature {
     public void healing(int healingPoint) {
         this.setHealth(this.getHealth() + healingPoint);
         this.setHealth(Math.min(this.getHealth(), 100));
+        this.isSick = false;
     }
 
     public void sleep(){
@@ -209,28 +211,33 @@ public abstract class Creature {
         }
     }
 
-    public void periodicUpdate() {
+    public void periodicUpdate(Enclosure enclosure) {
         growOld();
 
         if (!isAsleep && RANDOM.nextInt(100) < 10) {
             sleep();
-            System.out.println(name + " s'est endormi.");
+            System.out.println(enclosure.getName()+": " + name + " s'est endormi.");
         } else if (isAsleep && RANDOM.nextInt(100) < 20) {
             wakeUp();
-            System.out.println(name + " s'est réveillé.");
+            System.out.println(enclosure.getName()+": " + name + " s'est réveillé.");
         }
 
-        if (!isSick && RANDOM.nextInt(100) < 5) {
+        int sicknessProbability = 3;
+        if (enclosure.getCleanliness() < 30) {
+            sicknessProbability = 10;
+        }
+
+        if (!isSick && RANDOM.nextInt(100) < sicknessProbability) {
             setSick(true);
-            System.out.println(name + " est tombé malade.");
+            System.out.println(enclosure.getName()+": " + name + " est tombé malade.");
         }
 
         if (isSick) {
             int newHealth = this.getHealth() - 1;
             setHealth(newHealth);
-            System.out.println(name + " est malade et perd 1 point de vie.");
+            System.out.println(enclosure.getName()+": " + name + " est malade et perd 1 point de vie.");
             if (this.getHealth() <= 0) {
-                System.out.println(name + " est mort de maladie.");
+                System.out.println(enclosure.getName()+": " + name + " est mort de maladie.");
             }
         }
 
@@ -239,9 +246,9 @@ public abstract class Creature {
         if (this.getSatiety() < 30) {
             int newHealth = this.getHealth() - 3;
             setHealth(newHealth);
-            System.out.println(name + " a très faim et perd 3 points de vie.");
+            System.out.println(enclosure.getName()+": " + name + " a très faim et perd 3 points de vie.");
             if (this.getHealth() <= 0) {
-                System.out.println(name + " est mort de faim.");
+                System.out.println(enclosure.getName()+": " + name + " est mort de faim.");
             }
         }
 
@@ -251,7 +258,6 @@ public abstract class Creature {
             ((Viviparous) this).giveBirth();
         }
     }
-
     protected String generateRandomName(String[] names) {
         return names[RANDOM.nextInt(names.length)];
     }

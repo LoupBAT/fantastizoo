@@ -40,9 +40,6 @@ public class Kraken extends Oviparous implements Swimmer {
 
     @Override
     protected void addBabyToZoo(Creature baby) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(baby);
-        }
         System.out.println("Bébé kraken ajouté au zoo: " + baby.getName());
     }
 }

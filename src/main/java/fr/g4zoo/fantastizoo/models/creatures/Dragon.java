@@ -42,9 +42,6 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
 
     @Override
     protected void addBabyToZoo(Creature baby) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(baby);
-        }
         System.out.println("Bébé dragon ajouté au zoo: " + baby.getName());
     }
 

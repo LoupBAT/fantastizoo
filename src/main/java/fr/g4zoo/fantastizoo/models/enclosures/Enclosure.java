@@ -119,7 +119,7 @@ public class Enclosure {
     }
 
     public void periodicUpdate() {
-        int decrease = RANDOM.nextInt(11);
+        int decrease = RANDOM.nextInt(6);
         cleanliness -= decrease;
         if (cleanliness < 0) {
             cleanliness = 0;

@@ -1,5 +1,6 @@
 package fr.g4zoo.fantastizoo.models;
 
+import fr.g4zoo.fantastizoo.models.creatures.Creature;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 import fr.g4zoo.fantastizoo.models.enclosures.Aviary; // Importer la classe Aviary
 
@@ -75,5 +76,15 @@ public class Zoo {
 
     public ArrayList<Enclosure> getAllEnclosures() {
         return new ArrayList<>(enclosures);
+    }
+
+    public void periodicUpdate() {
+        for (Enclosure enclosure : enclosures) {
+            enclosure.periodicUpdate();
+
+            for (Creature creature : enclosure.getCreatures()) {
+                creature.periodicUpdate(enclosure);
+            }
+        }
     }
 }

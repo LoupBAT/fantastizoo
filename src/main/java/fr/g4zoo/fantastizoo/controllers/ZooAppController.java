@@ -14,18 +14,12 @@ import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ZooAppController {
@@ -50,7 +44,6 @@ public class ZooAppController {
 
     @FXML
     private Text txt_enclosureName;
-
 
     @FXML
     private ProgressBar creature_life_bar;
@@ -117,6 +110,8 @@ public class ZooAppController {
 
     private Thread timeUpdateThread;
 
+    private Thread periodicUpdateThread;
+
     public Zoo getZoo() {
         return zoo;
     }
@@ -143,6 +138,22 @@ public class ZooAppController {
             e.printStackTrace();
         }
     });
+
+    private void startPeriodicUpdateThread() {
+        periodicUpdateThread = new Thread(() -> {
+            try {
+                while (true) {
+                    zoo.periodicUpdate();
+
+                    Thread.sleep(15000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        periodicUpdateThread.setDaemon(true);
+        periodicUpdateThread.start();
+    }
 
     public void initialize(ZooMaster master, String zooName) throws IOException {
         welcomeThread.start();
@@ -188,7 +199,7 @@ public class ZooAppController {
 
         zoo.addEnclosure(aviary);
         zoo.addEnclosure(secondAviary);
-
+        startPeriodicUpdateThread();
         updateUI();
 
         enclosureListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -205,7 +216,6 @@ public class ZooAppController {
             }
         });
 
-
         creatureListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 int selectedCreatureId = creatureIdMap.get(newValue);
@@ -215,12 +225,12 @@ public class ZooAppController {
                 creature_life_bar.setProgress((double) selectedCreature.getHealth() / 100.0);
                 creature_satiety_bar.setProgress((double) selectedCreature.getSatiety() / 100.0);
 
-                txt_life.setText(""+selectedCreature.getHealth());
-                txt_satiety.setText(""+selectedCreature.getSatiety());
+                txt_life.setText("" + selectedCreature.getHealth());
+                txt_satiety.setText("" + selectedCreature.getSatiety());
                 txt_creatureName.setText(selectedCreature.getName());
-                txt_creatureAge.setText(selectedCreature.getAge()+" ans");
-                txt_creatureHeight.setText(selectedCreature.getHeight()+" m");
-                txt_creatureWeight.setText(selectedCreature.getWeight()+" kg");
+                txt_creatureAge.setText(selectedCreature.getAge() + " ans");
+                txt_creatureHeight.setText(selectedCreature.getHeight() + " m");
+                txt_creatureWeight.setText(selectedCreature.getWeight() + " kg");
                 if (selectedCreature.getGender() == 'm') {
                     txt_creatureGender.setText("Male");
                 } else {
@@ -248,7 +258,6 @@ public class ZooAppController {
             creatureCountLabel.setText("" + totalCreatureCount);
         }
     }
-
 
     private void updateCreatureListView(Enclosure enclosure) {
         creatureListView.getItems().clear();
@@ -320,10 +329,10 @@ public class ZooAppController {
         if (this.getSelectedCreature() instanceof Flyer) {
             ((Flyer) this.getSelectedCreature()).fly();
             reduceWeight(0.5);
-        } else if (this.getSelectedCreature() instanceof Swimmer ) {
+        } else if (this.getSelectedCreature() instanceof Swimmer) {
             ((Swimmer) this.getSelectedCreature()).swim();
             reduceWeight(0.5);
-        } else if (this.getSelectedCreature() instanceof Runner ) {
+        } else if (this.getSelectedCreature() instanceof Runner) {
             ((Runner) this.getSelectedCreature()).run();
             reduceWeight(0.5);
         } else {
@@ -356,7 +365,6 @@ public class ZooAppController {
             System.out.println(message);
         }
     }
-
 
     @FXML
     public void onClickClean(ActionEvent actionEvent) {

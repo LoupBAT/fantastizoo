@@ -34,9 +34,6 @@ public class Nymph extends Viviparous implements Reborner {
 
     @Override
     protected void addBabyToZoo(Creature baby) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(baby);
-        }
         System.out.println("Bébé nymphe ajouté au zoo : " + baby.getName());
     }
 
