@@ -319,27 +319,31 @@ public class ZooAppController {
 
     @FXML
     public void onClickHeal(ActionEvent event) {
-        this.getSelectedCreature().healing(40);
-        System.out.println(getSelectedCreature().getName() + " a été soigné.");
-        updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
+        if (!this.selectedCreature.isDead()) {
+            this.getSelectedCreature().healing(40);
+            System.out.println(getSelectedCreature().getName() + " a été soigné.");
+            updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
+        }
     }
 
     @FXML
     public void onClickTrain(ActionEvent event) {
-        if (this.getSelectedCreature() instanceof Flyer) {
-            ((Flyer) this.getSelectedCreature()).fly();
-            reduceWeight(0.5);
-        } else if (this.getSelectedCreature() instanceof Swimmer) {
-            ((Swimmer) this.getSelectedCreature()).swim();
-            reduceWeight(0.5);
-        } else if (this.getSelectedCreature() instanceof Runner) {
-            ((Runner) this.getSelectedCreature()).run();
-            reduceWeight(0.5);
-        } else {
-            reduceWeight(0.3);
-            System.out.println(getSelectedCreature().getName() + " s'entraine.");
+        if (!this.selectedCreature.isDead()) {
+            if (this.getSelectedCreature() instanceof Flyer) {
+                ((Flyer) this.getSelectedCreature()).fly();
+                reduceWeight(0.5);
+            } else if (this.getSelectedCreature() instanceof Swimmer) {
+                ((Swimmer) this.getSelectedCreature()).swim();
+                reduceWeight(0.5);
+            } else if (this.getSelectedCreature() instanceof Runner) {
+                ((Runner) this.getSelectedCreature()).run();
+                reduceWeight(0.5);
+            } else {
+                reduceWeight(0.3);
+                System.out.println(getSelectedCreature().getName() + " s'entraine.");
+            }
+            updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
         }
-        updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
     }
 
     private void reduceWeight(double amount) {
@@ -351,29 +355,38 @@ public class ZooAppController {
         this.getSelectedCreature().setWeight(newWeight);
     }
 
-
     @FXML
     public void onClickTransfer(ActionEvent actionEvent) {
-        Enclosure targetEnclosure = zoo.getEnclosureByName(enclosureListTransfer.getValue());
-        if (targetEnclosure != null) {
-            Creature transferredCreature = getSelectedCreature();
-            getSelectedEnclosure().removeCreature(transferredCreature);
-            targetEnclosure.addCreature(transferredCreature);
-            updateCreatureListView(getSelectedEnclosure());
+        if (!this.selectedCreature.isDead()) {
+            Enclosure targetEnclosure = zoo.getEnclosureByName(enclosureListTransfer.getValue());
+            if (targetEnclosure != null) {
+                Creature transferredCreature = getSelectedCreature();
+                getSelectedEnclosure().removeCreature(transferredCreature);
+                targetEnclosure.addCreature(transferredCreature);
+                updateCreatureListView(getSelectedEnclosure());
 
-            String message = transferredCreature.getName() + " a été transféré dans l'enclos " + targetEnclosure.getName();
-            System.out.println(message);
+                String message = transferredCreature.getName() + " a été transféré dans l'enclos " + targetEnclosure.getName();
+                System.out.println(message);
+            }
         }
     }
 
     @FXML
     public void onClickClean(ActionEvent actionEvent) {
-        int cleanliness = getSelectedEnclosure().getCleanliness();
+        Enclosure selectedEnclosure = getSelectedEnclosure();
+        int cleanliness = selectedEnclosure.getCleanliness();
         if (cleanliness == 100) {
             System.out.println("L'enclos est déjà propre.");
         } else {
-            getSelectedEnclosure().getCleaned();
-            updateSelectedEnclosure(getSelectedEnclosure().getName());
+            for (Creature creature : selectedEnclosure.getCreatures()) {
+                if (creature.isDead()) {
+                    getSelectedEnclosure().removeCreature(creature);
+                    System.out.println("Les créatures décédées sont retirés.");
+                }
+            }
+
+            selectedEnclosure.getCleaned();
+            updateSelectedEnclosure(selectedEnclosure.getName());
         }
     }
 

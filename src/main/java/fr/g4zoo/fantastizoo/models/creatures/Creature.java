@@ -30,7 +30,8 @@ public abstract class Creature {
     private boolean isHungry;
     private int health = 100;
     private boolean isAsleep;
-    private boolean isSick = false;
+    private boolean isSick;
+    private boolean isDead = false;
 
     // CONSTRUCTORS
 
@@ -89,8 +90,10 @@ public abstract class Creature {
     }
 
     public boolean isSick() {
-        return isAsleep;
+        return isSick;
     }
+
+    public boolean isDead() {return isDead;}
 
     // SETTERS
 
@@ -140,6 +143,10 @@ public abstract class Creature {
 
     public void setSick(boolean issick) {
         isSick = issick;
+    }
+
+    public void setDead(boolean isdead) {
+        isDead = isdead;
     }
 
     // METHODS
@@ -224,10 +231,10 @@ public abstract class Creature {
 
         if (!isAsleep && RANDOM.nextInt(100) < 10) {
             sleep();
-            System.out.println(enclosure.getName()+": " + name + " s'est endormi.");
+            System.out.println(enclosure.getName() + ": " + name + " s'est endormi.");
         } else if (isAsleep && RANDOM.nextInt(100) < 20) {
             wakeUp();
-            System.out.println(enclosure.getName()+": " + name + " s'est réveillé.");
+            System.out.println(enclosure.getName() + ": " + name + " s'est réveillé.");
         }
 
         int sicknessProbability = 3;
@@ -237,26 +244,45 @@ public abstract class Creature {
 
         if (!isSick && RANDOM.nextInt(100) < sicknessProbability) {
             setSick(true);
-            System.out.println(enclosure.getName()+": " + name + " est tombé malade.");
+            System.out.println(enclosure.getName() + ": " + name + " est tombé malade.");
         }
 
         if (isSick) {
             int newHealth = this.getHealth() - 1;
             setHealth(newHealth);
-            System.out.println(enclosure.getName()+": " + name + " est malade et perd 1 point de vie.");
-            if (this.getHealth() <= 0) {
-                System.out.println(enclosure.getName()+": " + name + " est mort de maladie.");
+            if (this.getHealth() < 0) {
+                setHealth(0);
+            }
+            System.out.println(enclosure.getName() + ": " + name + " est malade et perd 1 point de vie.");
+            if (this.getHealth() == 0) {
+                System.out.println(enclosure.getName() + ": " + name + " est mort de maladie.");
+                if (this instanceof Reborner) {
+                    ((Reborner) this).reborn();
+                } else {
+                    this.setDead(true);
+                }
             }
         }
 
         int newSatiety = this.getSatiety() - 2;
         setSatiety(newSatiety);
+        if (this.getSatiety() < 0) {
+            setSatiety(0);
+        }
         if (this.getSatiety() < 30) {
             int newHealth = this.getHealth() - 3;
             setHealth(newHealth);
-            System.out.println(enclosure.getName()+": " + name + " a très faim et perd 3 points de vie.");
-            if (this.getHealth() <= 0) {
-                System.out.println(enclosure.getName()+": " + name + " est mort de faim.");
+            if (this.getHealth() < 0) {
+                setHealth(0);
+            }
+            System.out.println(enclosure.getName() + ": " + name + " a très faim et perd 3 points de vie.");
+            if (this.getHealth() == 0) {
+                System.out.println(enclosure.getName() + ": " + name + " est mort de faim.");
+                if (this instanceof Reborner) {
+                    ((Reborner) this).reborn();
+                } else {
+                    this.setDead(true);
+                }
             }
         }
 
