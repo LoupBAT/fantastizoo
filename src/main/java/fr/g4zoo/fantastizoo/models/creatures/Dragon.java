@@ -49,10 +49,11 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
     public void reborn() {
         if (canReborn()) {
             rebornCount++;
-            System.out.println(this.getName() + " renaît de ses cendres !");
+            System.out.println(this.getName() + " renaît !");
             resetToBabyState();
         } else {
-            System.out.println(this.getName() + " ne peut plus renaître.");
+            this.setDead(true);
+            this.setSatiety(0);
         }
     }
 

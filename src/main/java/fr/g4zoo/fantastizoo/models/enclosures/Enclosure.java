@@ -95,9 +95,10 @@ public class Enclosure {
 
     public void feedCreatures() {
         if (creatureNumber > 0) {
-            System.out.println("Les créatures ont été nourries.");
             for (Creature creature : creatures) {
-                creature.eat(10);
+                if (!creature.isDead()) {
+                    creature.eat(10);
+                }
             }
         } else {
             System.out.println("Il n'y a pas de créature à nourrir.");

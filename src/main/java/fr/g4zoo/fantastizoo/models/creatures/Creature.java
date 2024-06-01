@@ -169,10 +169,20 @@ public abstract class Creature {
             this.setWeight(this.getWeight() + satietyPoint * 0.1);
         }
 
-        if (this.getSatiety() > 100) {
+        if (this.getSatiety() > 100 && !this.isDead()) {
             int newHealth = this.getHealth() - 5;
             this.setHealth(newHealth);
             System.out.println("Attention "+this.getName() + " mange trop -5PV !");
+            if (this.getHealth() <= 0) {
+                if (this instanceof Reborner) {
+                    System.out.println(this.getName() + " est mort à force de manger !");
+                    ((Reborner) this).reborn();
+                } else {
+                    this.setDead(true);
+                    this.setSatiety(0);
+                    System.out.println(this.getName() + " est mort à force de manger !");
+                }
+            }
             this.setSatiety(100);
         }
 

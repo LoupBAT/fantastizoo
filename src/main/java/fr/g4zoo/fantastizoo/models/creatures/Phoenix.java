@@ -50,7 +50,8 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
             System.out.println(this.getName() + " renaît de ses cendres !");
             resetToBabyState();
         } else {
-            System.out.println(this.getName() + " ne peut plus renaître.");
+            this.setDead(true);
+            this.setSatiety(0);
         }
     }
 
