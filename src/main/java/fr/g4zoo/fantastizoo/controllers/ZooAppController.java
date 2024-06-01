@@ -3,6 +3,7 @@ package fr.g4zoo.fantastizoo.controllers;
 import fr.g4zoo.fantastizoo.models.Console;
 import fr.g4zoo.fantastizoo.models.Zoo;
 import fr.g4zoo.fantastizoo.models.ZooMaster;
+import fr.g4zoo.fantastizoo.models.Watch;
 import fr.g4zoo.fantastizoo.models.creatures.Creature;
 import fr.g4zoo.fantastizoo.models.creatures.Phoenix;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
@@ -22,7 +23,9 @@ import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ZooAppController {
@@ -94,6 +97,8 @@ public class ZooAppController {
     @FXML
     private Label zooMasterHp;
 
+    @FXML
+    private Text txt_time;
 
     @FXML
     public ChoiceBox<String> enclosureListTransfer;
@@ -106,6 +111,11 @@ public class ZooAppController {
 
     private Creature selectedCreature;
 
+    private Watch watch;
+
+    private Thread watchThread;
+
+    private Thread timeUpdateThread;
 
     public Zoo getZoo() {
         return zoo;
@@ -136,6 +146,24 @@ public class ZooAppController {
 
     public void initialize(ZooMaster master, String zooName) throws IOException {
         welcomeThread.start();
+
+        watch = new Watch();
+        watchThread = new Thread(watch);
+        watchThread.setDaemon(true);
+        watchThread.start();
+
+        timeUpdateThread = new Thread(() -> {
+            try {
+                while (true) {
+                    Platform.runLater(() -> txt_time.setText(watch.getTime()));
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        timeUpdateThread.setDaemon(true);
+        timeUpdateThread.start();
 
         // Display console on screen
         PrintStream ps = new PrintStream(new Console(showConsol), true, "UTF-8");

@@ -66,11 +66,16 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Text fx:id="txt_time" layoutX="27.0" layoutY="626.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2:36">
+                     <font>
+                        <Font name="System Bold" size="72.0" />
+                     </font>
+                  </Text>
                     </children>
                 </AnchorPane>
                 <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
                     <content>
-                        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="772.0" prefWidth="504.0">
+                        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="772.0" prefWidth="534.0">
                             <children>
                         <Text fx:id="txt_enclosureName" layoutX="14.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0">
                            <font>
@@ -129,7 +134,7 @@
                             </children></AnchorPane>
                     </content>
                 </ScrollPane>
-                <AnchorPane prefHeight="785.0" prefWidth="218.0">
+                <AnchorPane prefHeight="785.0" prefWidth="318.0">
                     <children>
                         <Label alignment="CENTER" layoutX="26.0" layoutY="48.0" style="&#10;" text="Actions sur l'enclos" textAlignment="CENTER" textFill="$x2" wrapText="false">
                             <font>
