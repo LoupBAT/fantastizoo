@@ -5,6 +5,7 @@ import fr.g4zoo.fantastizoo.models.Zoo;
 import fr.g4zoo.fantastizoo.models.ZooMaster;
 import fr.g4zoo.fantastizoo.models.Watch;
 import fr.g4zoo.fantastizoo.models.creatures.Creature;
+import fr.g4zoo.fantastizoo.models.creatures.Dragon;
 import fr.g4zoo.fantastizoo.models.creatures.Phoenix;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
@@ -19,7 +20,9 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ZooAppController {
@@ -191,14 +194,18 @@ public class ZooAppController {
         Phoenix phoenixMale = new Phoenix("Ember", aviary, 'm', 15, 10.0, 2.0);
         Phoenix phoenixFemale = new Phoenix("Blaze", aviary, 'f', 12, 8.0, 1.8);
         Phoenix phoenixFemale2 = new Phoenix("Rode", aviary, 'f', 16, 18.0, 10.8);
-
         Aviary secondAviary = new Aviary("Phénix 2", 800.0, 30.0);
-
+        Enclosure enclosure1 = new Enclosure("Enclos 1", 800.0);
+        Enclosure enclosure2 = new Enclosure("Enclos 2", 800.0);
+        Dragon dragonMale = new Dragon("Male", enclosure1, 'm',15, 10.0, 2.0);
+        Dragon dragonFemelle = new Dragon("Male", enclosure2, 'm',15, 10.0, 2.0);
         Phoenix newPhoenixMale = new Phoenix("Fawkes", secondAviary, 'm', 20, 12.0, 2.2);
         Phoenix newPhoenixFemale = new Phoenix("Pyro", secondAviary, 'f', 18, 9.0, 2.0);
 
         zoo.addEnclosure(aviary);
         zoo.addEnclosure(secondAviary);
+        zoo.addEnclosure(enclosure1);
+        zoo.addEnclosure(enclosure2);
         startPeriodicUpdateThread();
         updateUI();
 
@@ -307,13 +314,17 @@ public class ZooAppController {
         if (this.getZoo() != null) {
             Zoo zoo = this.getZoo();
 
-            enclosureListTransfer.getItems().clear();
+            Platform.runLater(() -> {
+                enclosureListTransfer.getItems().clear();
 
-            for (Enclosure enclosure : zoo.getAllEnclosures()) {
-                if (!enclosure.equals(this.getSelectedEnclosure())) {
-                    enclosureListTransfer.getItems().add(enclosure.getName());
+                for (Enclosure enclosure : zoo.getAllEnclosures()) {
+                    if (!enclosure.equals(this.getSelectedEnclosure())) {
+                        if (!enclosure.getCreatures().isEmpty() && enclosure.getCreatures().getFirst().getClass().equals(this.getSelectedCreature().getClass())) {
+                            enclosureListTransfer.getItems().add(enclosure.getName());
+                        }
+                    }
                 }
-            }
+            });
         }
     }
 
@@ -331,15 +342,15 @@ public class ZooAppController {
         if (!this.selectedCreature.isDead()) {
             if (this.getSelectedCreature() instanceof Flyer) {
                 ((Flyer) this.getSelectedCreature()).fly();
-                reduceWeight(0.5);
+                reduceWeight(0.05);
             } else if (this.getSelectedCreature() instanceof Swimmer) {
                 ((Swimmer) this.getSelectedCreature()).swim();
-                reduceWeight(0.5);
+                reduceWeight(0.05);
             } else if (this.getSelectedCreature() instanceof Runner) {
                 ((Runner) this.getSelectedCreature()).run();
-                reduceWeight(0.5);
+                reduceWeight(0.05);
             } else {
-                reduceWeight(0.3);
+                reduceWeight(0.03);
                 System.out.println(getSelectedCreature().getName() + " s'entraine.");
             }
             updateSelectedCreature(creatureListView.getSelectionModel().getSelectedItem());
@@ -378,11 +389,15 @@ public class ZooAppController {
         if (cleanliness == 100) {
             System.out.println("L'enclos est déjà propre.");
         } else {
+            List<Creature> deadCreatures = new ArrayList<>();
             for (Creature creature : selectedEnclosure.getCreatures()) {
                 if (creature.isDead()) {
-                    getSelectedEnclosure().removeCreature(creature);
-                    System.out.println("Les créatures décédées sont retirés.");
+                    deadCreatures.add(creature);
                 }
+            }
+            for (Creature deadCreature : deadCreatures) {
+                selectedEnclosure.removeCreature(deadCreature);
+                System.out.println(deadCreature.getName() + " a été retiré de l'enclos car il est mort.");
             }
 
             selectedEnclosure.getCleaned();

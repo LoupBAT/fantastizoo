@@ -160,6 +160,7 @@ public abstract class Creature {
     public void eat(int satietyPoint) {
         int newSatiety = this.getSatiety() + satietyPoint;
         this.setSatiety(newSatiety);
+        this.setWeight(this.getWeight() + 0.5);
 
         if (this.getSatiety() <= 40) {
             this.setHungry(true);
