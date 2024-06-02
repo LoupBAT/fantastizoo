@@ -4,12 +4,11 @@ import fr.g4zoo.fantastizoo.models.Console;
 import fr.g4zoo.fantastizoo.models.Zoo;
 import fr.g4zoo.fantastizoo.models.ZooMaster;
 import fr.g4zoo.fantastizoo.models.Watch;
-import fr.g4zoo.fantastizoo.models.creatures.Creature;
-import fr.g4zoo.fantastizoo.models.creatures.Dragon;
-import fr.g4zoo.fantastizoo.models.creatures.Phoenix;
+import fr.g4zoo.fantastizoo.models.creatures.*;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
+import fr.g4zoo.fantastizoo.models.enclosures.Aquarium;
 import fr.g4zoo.fantastizoo.models.enclosures.Aviary;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 import javafx.application.Platform;
@@ -24,10 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ZooAppController {
 
@@ -198,23 +194,81 @@ public class ZooAppController {
             this.zooMasterHp.setText(master.getHp() + "");
         });
 
-        Aviary aviary = new Aviary("Phénix 1", 500.0, 20.0);
+        Aviary aviary1 = new Aviary("Phénix 1", 500.0, 20.0);
+        Aviary aviary2 = new Aviary("Phénix 2", 800.0, 30.0);
+        Enclosure enclosure1 = new Enclosure("Dragon 1", 800.0);
+        Enclosure enclosure2 = new Enclosure("Dragon 2", 800.0);
+        Aquarium aquarium1 = new Aquarium("Kraken 1", 800.0, 100, 50);
+        Aquarium aquarium2 = new Aquarium("Kraken 2", 800.0, 100, 50);
+        Enclosure enclosure3 = new Enclosure("Lycanthrope 1", 800.0);
+        Enclosure enclosure4 = new Enclosure("Lycanthrope 2", 800.0);
+        Aquarium aquarium3 = new Aquarium("Megalodon 1", 800.0, 100, 50);
+        Aquarium aquarium4 = new Aquarium("Megalodon 2", 800.0, 100, 50);
+        Aquarium aquarium5 = new Aquarium("Mermaid 1", 800.0, 100, 50);
+        Aquarium aquarium6 = new Aquarium("Mermaid 2", 800.0, 100, 50);
+        Enclosure enclosure5 = new Enclosure("Nymph 1", 800.0);
+        Enclosure enclosure6 = new Enclosure("Nymph 2", 800.0);
+        Aviary aviary3 = new Aviary("Unicorn 1", 500.0, 20.0);
+        Aviary aviary4 = new Aviary("Unicorn 2", 800.0, 30.0);
 
-        Phoenix phoenixMale = new Phoenix("Ember", aviary, 'm', 15, 10.0, 2.0);
-        Phoenix phoenixFemale = new Phoenix("Blaze", aviary, 'f', 12, 8.0, 1.8);
-        Phoenix phoenixFemale2 = new Phoenix("Rode", aviary, 'f', 16, 18.0, 10.8);
-        Aviary secondAviary = new Aviary("Phénix 2", 800.0, 30.0);
-        Enclosure enclosure1 = new Enclosure("Enclos 1", 800.0);
-        Enclosure enclosure2 = new Enclosure("Enclos 2", 800.0);
-        Dragon dragonMale = new Dragon("Male", enclosure1, 'm',15, 10.0, 2.0);
-        Dragon dragonFemelle = new Dragon("Male", enclosure2, 'm',15, 10.0, 2.0);
-        Phoenix newPhoenixMale = new Phoenix("Fawkes", secondAviary, 'm', 20, 12.0, 2.2);
-        Phoenix newPhoenixFemale = new Phoenix("Pyro", secondAviary, 'f', 18, 9.0, 2.0);
+        Phoenix phoenixMale = new Phoenix("Ember", aviary1, 'm', 15, 10.0, 2.0);
+        Phoenix phoenixFemale = new Phoenix("Blaze", aviary1, 'f', 12, 8.0, 1.8);
+        Phoenix newPhoenixMale = new Phoenix("Fawkes", aviary2, 'm', 20, 12.0, 2.2);
+        Phoenix newPhoenixFemale = new Phoenix("Pyro", aviary2, 'f', 18, 9.0, 2.0);
 
-        zoo.addEnclosure(aviary);
-        zoo.addEnclosure(secondAviary);
+        Dragon dragonMale = new Dragon("Draco", enclosure1, 'm', 15, 80.0, 2.5);
+        Dragon dragonFemale = new Dragon("Saphira", enclosure2, 'f', 15, 75.0, 2.3);
+        Dragon dragonMale2 = new Dragon("Toothless", enclosure1, 'm', 20, 70.0, 2.0);
+
+
+        Kraken krakenMale = new Kraken("Tentaculus", aquarium1, 'm', 15, 2000.0, 5.0);
+        Kraken krakenFemale = new Kraken("Coralus", aquarium2, 'f', 15, 1800.0, 4.5);
+        Kraken krakenFemale2 = new Kraken("Squidicus", aquarium2, 'f', 18, 1900.0, 4.7);
+
+
+        Lycanthrope lycanMale = new Lycanthrope("Fenrir", enclosure3, 'm', 15, 150.0, 1.8);
+        Lycanthrope lycanFemale = new Lycanthrope("Lupa", enclosure4, 'f', 15, 140.0, 1.7);
+        Lycanthrope lycanMale2 = new Lycanthrope("Remus", enclosure3, 'm', 25, 160.0, 1.9);
+
+
+        Megalodon megaMale = new Megalodon("Leviathan", aquarium3, 'm', 15, 3000.0, 6.0);
+        Megalodon megaFemale = new Megalodon("Tsunami", aquarium4, 'f', 15, 2800.0, 5.5);
+        Megalodon megaFemale2 = new Megalodon("Riptide", aquarium4, 'f', 22, 2600.0, 5.2);
+
+
+        Mermaid mermaidMale = new Mermaid("Ariel", aquarium5, 'f', 15, 50.0, 1.5);
+        Mermaid mermaidFemale = new Mermaid("Nerissa", aquarium6, 'f', 15, 48.0, 1.4);
+        Mermaid mermaidMale2 = new Mermaid("Marina", aquarium5, 'f', 21, 45.0, 1.4);
+
+
+
+        Nymph nyphMale = new Nymph("Aurora", enclosure5, 'm', 15, 0.5, 0.3);
+        Nymph nyphFemale = new Nymph("Nova", enclosure6, 'f', 15, 0.4, 0.25);
+        Nymph nyphFemale2 = new Nymph("Luna", enclosure5, 'f', 20, 0.6, 0.35);
+
+
+        Unicorn unicornMale = new Unicorn("Celestia", aviary3, 'm', 15, 550.0, 1.7);
+        Unicorn unicornFemale = new Unicorn("Luna", aviary4, 'f', 15, 520.0, 1.6);
+        Unicorn unicornMale2 = new Unicorn("Sparkle", aviary3, 'm', 18, 500.0, 1.6);
+
+
+        zoo.addEnclosure(aviary1);
+        zoo.addEnclosure(aviary2);
+        zoo.addEnclosure(aviary3);
+        zoo.addEnclosure(aviary4);
         zoo.addEnclosure(enclosure1);
         zoo.addEnclosure(enclosure2);
+        zoo.addEnclosure(enclosure3);
+        zoo.addEnclosure(enclosure4);
+        zoo.addEnclosure(enclosure5);
+        zoo.addEnclosure(enclosure6);
+        zoo.addEnclosure(aquarium1);
+        zoo.addEnclosure(aquarium2);
+        zoo.addEnclosure(aquarium3);
+        zoo.addEnclosure(aquarium4);
+        zoo.addEnclosure(aquarium5);
+        zoo.addEnclosure(aquarium6);
+
         startPeriodicUpdateThread();
         Platform.runLater(this::updateUI);
 
@@ -279,7 +333,7 @@ public class ZooAppController {
         creatureListView.getItems().clear();
         creatureIdMap.clear();
         enclosure.getCreatures().forEach(creature -> {
-            String creatureInfo = String.format("Nom: %s",
+            String creatureInfo = String.format("%s",
                     creature.getName());
             creatureListView.getItems().add(creatureInfo);
             creatureIdMap.put(creatureInfo, creature.getId());
