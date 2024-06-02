@@ -2,7 +2,9 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Nymph.
+ */
 public class Nymph extends Viviparous implements Reborner {
     private static final int DEFAULT_GESTATION_PERIOD = 6;
     private static final String[] NAMES = {"Astra", "Luna", "Selene", "Nyx", "Aurora", "Celeste", "Eos", "Nova"};
@@ -31,7 +33,9 @@ public class Nymph extends Viviparous implements Reborner {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * Create a baby after the gestation period of the mom
+     */
     @Override
     protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
@@ -41,7 +45,9 @@ public class Nymph extends Viviparous implements Reborner {
 
         return new Nymph(babyName, this.enclosure, gender, 1, weight, height);
     }
-
+    /**
+     * The nymph can reborn 3 times
+     */
     @Override
     public void reborn() {
         if (canReborn()) {
@@ -53,12 +59,16 @@ public class Nymph extends Viviparous implements Reborner {
             this.setSatiety(0);
         }
     }
-
+    /**
+     * Check if the nymph have reached the max reborn count
+     */
     @Override
     public boolean canReborn() {
         return rebornCount < MAX_REBORN_COUNT;
     }
-
+    /**
+     * When the nymph have reborned she was reset as a newborn
+     */
     private void resetToBabyState() {
         this.setAge(0);
         this.setWeight(generateRandomWeight(2.0, 4.0));

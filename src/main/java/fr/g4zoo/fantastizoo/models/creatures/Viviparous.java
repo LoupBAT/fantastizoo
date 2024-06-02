@@ -1,7 +1,9 @@
 package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Viviparous.
+ */
 public abstract class Viviparous extends Creature {
     private int gestationLength;
     private boolean isPregnant;

@@ -13,7 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * The controller for the first form.
+ */
 public class ZooMasterController {
 
     @FXML

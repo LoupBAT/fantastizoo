@@ -1,7 +1,9 @@
 package fr.g4zoo.fantastizoo.models.enclosures;
 
 import fr.g4zoo.fantastizoo.models.ZooMaster;
-
+/**
+ * The type Aviary.
+ */
 public class Aviary extends Enclosure {
     private double height;
 

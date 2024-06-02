@@ -6,7 +6,9 @@ import fr.g4zoo.fantastizoo.models.creatures.Creature;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * The type Enclosure.
+ */
 public class Enclosure {
 
     private String name;
@@ -76,7 +78,7 @@ public class Enclosure {
     }
 
     /**
-     * Add creature.
+     * Add creature to the enclosure.
      *
      * @param creature the creature
      */
@@ -90,7 +92,7 @@ public class Enclosure {
     }
 
     /**
-     * Remove creature.
+     * Remove creature from an enclosure.
      *
      * @param creature the creature
      */
@@ -103,7 +105,7 @@ public class Enclosure {
     }
 
     /**
-     * Feed creatures.
+     * Feed creatures of the selected enclosure.
      */
     public void feedCreatures() {
         if (creatureNumber > 0) {
@@ -118,7 +120,8 @@ public class Enclosure {
     }
 
     /**
-     * Gets cleaned.
+     * Cleaned the selected enclosure.
+     * 5% to lose a life if minimum 1 of the creature is not sleeping
      *
      * @param zooMaster the zoo master
      * @return the cleaned
@@ -168,7 +171,7 @@ public class Enclosure {
     }
 
     /**
-     * Periodic update.
+     * Periodic update of the enclosure.
      */
     public void periodicUpdate() {
         synchronized (cleanlinessLock) {

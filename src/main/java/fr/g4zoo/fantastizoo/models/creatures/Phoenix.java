@@ -3,7 +3,9 @@ package fr.g4zoo.fantastizoo.models.creatures;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Phoenix.
+ */
 public class Phoenix extends Oviparous implements Flyer, Reborner {
 
     private static final int DEFAULT_INCUBATION_PERIOD = 5;
@@ -32,7 +34,9 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * Create a baby after the incubation period of the egg
+     */
     @Override
     protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
@@ -42,12 +46,16 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
 
         return new Phoenix(babyName, this.enclosure, gender, 1, weight, height);
     }
-
+    /**
+     * When the phoenix is trained he can fly.
+     */
     @Override
     public void fly() {
         System.out.println(this.getName() + " s'envole majestueusement !");
     }
-
+    /**
+     * The phoenix can reborn 3 times
+     */
     @Override
     public void reborn() {
         if (canReborn()) {
@@ -59,12 +67,16 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
             this.setSatiety(0);
         }
     }
-
+    /**
+     * Check if the phoenix have reached the max reborn count
+     */
     @Override
     public boolean canReborn() {
         return rebornCount < MAX_REBORN_COUNT;
     }
-
+    /**
+     * When the phoenix have reborned she was reset as a newborn
+     */
     private void resetToBabyState() {
         this.setAge(0);
         this.setWeight(generateRandomWeight(1.0, 3.0));

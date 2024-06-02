@@ -2,7 +2,9 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Kraken.
+ */
 public class Kraken extends Oviparous implements Swimmer {
 
     private static final int DEFAULT_INCUBATION_PERIOD = 5;
@@ -32,12 +34,16 @@ public class Kraken extends Oviparous implements Swimmer {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * When the kraken is trained he can swim.
+     */
     @Override
     public void swim() {
         System.out.println(this.getName() + " nage !");
     }
-
+    /**
+     * Create a baby after the incubation period of the egg
+     */
     @Override
     protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);

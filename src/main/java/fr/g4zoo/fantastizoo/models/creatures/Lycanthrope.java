@@ -2,7 +2,9 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Lycanthrope.
+ */
 public class Lycanthrope extends Viviparous implements Runner {
     private static final int DEFAULT_GESTATION_PERIOD = 9;
     private static final String[] NAMES = {"Fenrir", "Remus", "Lupa", "Lycus", "Theron", "Ulric"};
@@ -30,7 +32,9 @@ public class Lycanthrope extends Viviparous implements Runner {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * Create a baby after the gestation period of the mom
+     */
     @Override
     protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
@@ -41,6 +45,9 @@ public class Lycanthrope extends Viviparous implements Runner {
         return new Lycanthrope(babyName, this.enclosure, gender, 1, weight, height);
     }
 
+    /**
+     * When the Lycanthrope is trained he can run.
+     */
     @Override
     public void run() {
         System.out.println(this.getName() + " court à pleine vitesse !");

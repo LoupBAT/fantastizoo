@@ -3,7 +3,9 @@ package fr.g4zoo.fantastizoo.models.creatures;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Dragon.
+ */
 public class Dragon extends Oviparous implements Flyer, Reborner {
 
     private static final int DEFAULT_INCUBATION_PERIOD = 10;
@@ -34,12 +36,17 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * When a dragon is trained he can fly
+     */
     @Override
     public void fly() {
         System.out.println(this.getName() + " s'envole majestueusement !");
     }
 
+    /**
+     * Create a baby after the incubation period of the egg
+     */
     @Override
     protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
@@ -50,6 +57,9 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
         return new Dragon(babyName, this.enclosure, gender, 1, weight, height);
     }
 
+    /**
+     * The dragon can reborn 3 times
+     */
     @Override
     public void reborn() {
         if (canReborn()) {
@@ -62,11 +72,17 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
         }
     }
 
+    /**
+     * Check if the dragon have reached the max reborn count
+     */
     @Override
     public boolean canReborn() {
         return rebornCount < MAX_REBORN_COUNT;
     }
 
+    /**
+     * When the dragon have reborned he was reset as a newborn
+     */
     private void resetToBabyState() {
         this.setAge(0);
         this.setWeight(generateRandomWeight(10.0, 50.0));

@@ -1,7 +1,9 @@
 package fr.g4zoo.fantastizoo.models.enclosures;
 
 import fr.g4zoo.fantastizoo.models.ZooMaster;
-
+/**
+ * The type Aquarium.
+ */
 public class Aquarium extends Enclosure {
     private double depth;
     private double waterSalinity;

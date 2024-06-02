@@ -1,7 +1,9 @@
 package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Oviparous.
+ */
 public abstract class Oviparous extends Creature {
 
     private int incubationPeriod;
@@ -41,7 +43,7 @@ public abstract class Oviparous extends Creature {
     protected abstract Creature createBaby();
 
     /**
-     * Simulate incubation period.
+     * Simulate incubation period of the egg.
      *
      * @param onHatch the on hatch
      */

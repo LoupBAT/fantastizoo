@@ -26,7 +26,7 @@ import java.io.PrintStream;
 import java.util.*;
 
 /**
- * The type Zoo app controller.
+ * The controller of the main view.
  */
 public class ZooAppController {
 
@@ -123,29 +123,14 @@ public class ZooAppController {
 
     private Thread periodicUpdateThread;
 
-    /**
-     * Gets zoo.
-     *
-     * @return the zoo
-     */
     public Zoo getZoo() {
         return zoo;
     }
 
-    /**
-     * Gets selected enclosure.
-     *
-     * @return the selected enclosure
-     */
     public Enclosure getSelectedEnclosure() {
         return selectedEnclosure;
     }
 
-    /**
-     * Gets selected creature.
-     *
-     * @return the selected creature
-     */
     public Creature getSelectedCreature() {
         return selectedCreature;
     }
@@ -185,7 +170,7 @@ public class ZooAppController {
     }
 
     /**
-     * Initialize.
+     * Initialize the app.
      *
      * @param master  the master
      * @param zooName the zoo name
@@ -354,7 +339,7 @@ public class ZooAppController {
     }
 
     /**
-     * update the Creature List View.
+     * update the Creature List.
      *
      * @param enclosure  the enclosure
      */
@@ -414,6 +399,7 @@ public class ZooAppController {
 
     /**
      * Update enclosure list transfer.
+     * We can only transfer a creature who have the same class
      */
     void updateEnclosureListTransfer() {
         if (this.getZoo() != null) {
@@ -434,7 +420,7 @@ public class ZooAppController {
     }
 
     /**
-     * On click heal.
+     * Heal the selected creature.
      *
      * @param event the event
      */
@@ -448,7 +434,7 @@ public class ZooAppController {
     }
 
     /**
-     * On click train.
+     * Train the selected creature.
      *
      * @param event the event
      */
@@ -473,7 +459,7 @@ public class ZooAppController {
     }
 
     /**
-     * reduce weight.
+     * reduce weight when the creature is train.
      *
      * @param amount the amount of the reduction
      */
@@ -487,8 +473,8 @@ public class ZooAppController {
     }
 
     /**
-     * On click transfer.
-     *
+     * Transfer the seltected creature to the selected enclosure.
+     * Update the creature list
      * @param actionEvent the action event
      */
     @FXML
@@ -508,7 +494,7 @@ public class ZooAppController {
     }
 
     /**
-     * On click clean.
+     * Clean the selected enclosure.
      *
      * @param actionEvent the action event
      */
@@ -545,7 +531,7 @@ public class ZooAppController {
     }
 
     /**
-     * show game overview.
+     * show the game over view.
      *
      * @param timeValue the time for the game over screen
      */
@@ -567,7 +553,7 @@ public class ZooAppController {
     }
 
     /**
-     * On click feed.
+     * Feed all creature in the selected enclosure.
      *
      * @param actionEvent the action event
      */
