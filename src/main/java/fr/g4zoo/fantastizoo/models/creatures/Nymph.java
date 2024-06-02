@@ -33,11 +33,6 @@ public class Nymph extends Viviparous implements Reborner {
     }
 
     @Override
-    protected void addBabyToZoo(Creature baby) {
-        System.out.println("Bébé nymphe ajouté au zoo : " + baby.getName());
-    }
-
-    @Override
     public void reborn() {
         if (canReborn()) {
             rebornCount++;

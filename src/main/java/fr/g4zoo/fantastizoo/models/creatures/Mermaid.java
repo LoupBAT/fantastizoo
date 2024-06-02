@@ -32,11 +32,6 @@ public class Mermaid extends Viviparous implements Swimmer {
     }
 
     @Override
-    protected void addBabyToZoo(Creature baby) {
-        System.out.println("Bébé sirène ajouté au zoo : " + baby.getName());
-    }
-
-    @Override
     public void swim() {
         System.out.println(this.getName() + " nage avec élégance !");
     }

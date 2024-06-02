@@ -34,11 +34,6 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     }
 
     @Override
-    protected void addBabyToZoo(Creature baby) {
-        System.out.println("Bébé phénix ajouté au zoo: " + baby.getName());
-    }
-
-    @Override
     public void fly() {
         System.out.println(this.getName() + " s'envole majestueusement !");
     }

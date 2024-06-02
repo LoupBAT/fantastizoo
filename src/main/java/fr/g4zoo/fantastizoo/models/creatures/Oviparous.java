@@ -1,5 +1,7 @@
 package fr.g4zoo.fantastizoo.models.creatures;
 
+import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
+
 public abstract class Oviparous extends Creature {
 
     private int incubationPeriod;
@@ -14,22 +16,19 @@ public abstract class Oviparous extends Creature {
         this.incubationPeriod = incubationPeriod;
     }
 
-    public void layEgg() {
+    public void layEgg(Enclosure enclosure) {
         if (this.getGender() != 'f' || this.getAge() < 10) {
             return;
         }
 
-        System.out.println(this.getName() + " a pondu un œuf.");
+        System.out.println(enclosure.getName() + ": " + this.getName() + " a pondu un œuf.");
         simulateIncubationPeriod(() -> {
             Creature baby = createBaby();
-            System.out.println("L'œuf de " + getName() + " a éclos et un bébé est né : " + baby.getName() + " !");
-            addBabyToZoo(baby);
+            System.out.println(enclosure.getName() + ": L'œuf de " + getName() + " a éclos et un bébé est né : " + baby.getName() + " !");
         });
     }
 
     protected abstract Creature createBaby();
-
-    protected abstract void addBabyToZoo(Creature baby);
 
     protected void simulateIncubationPeriod(Runnable onHatch) {
         new Thread(() -> {

@@ -36,9 +36,4 @@ public class Megalodon extends Oviparous implements Swimmer {
 
         return new Megalodon(babyName, this.enclosure, gender, 1, weight, height);
     }
-
-    @Override
-    protected void addBabyToZoo(Creature baby) {
-        System.out.println("Bébé dragon ajouté au zoo: " + baby.getName());
-    }
 }

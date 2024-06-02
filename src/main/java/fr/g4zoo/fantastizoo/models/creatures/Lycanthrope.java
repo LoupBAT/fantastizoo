@@ -32,11 +32,6 @@ public class Lycanthrope extends Viviparous implements Runner {
     }
 
     @Override
-    protected void addBabyToZoo(Creature baby) {
-        System.out.println("Bébé lycanthrope ajouté au zoo : " + baby.getName());
-    }
-
-    @Override
     public void run() {
         System.out.println(this.getName() + " court à pleine vitesse !");
     }

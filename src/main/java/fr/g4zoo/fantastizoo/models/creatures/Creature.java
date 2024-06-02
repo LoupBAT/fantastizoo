@@ -307,9 +307,9 @@ public abstract class Creature {
         }
 
         if (this instanceof Oviparous && RANDOM.nextInt(100) < 5) {
-            ((Oviparous) this).layEgg();
+            ((Oviparous) this).layEgg(enclosure);
         } else if (this instanceof Viviparous && RANDOM.nextInt(100) < 5) {
-            ((Viviparous) this).giveBirth();
+            ((Viviparous) this).giveBirth(enclosure);
         }
     }
 

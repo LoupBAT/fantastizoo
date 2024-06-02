@@ -1,5 +1,7 @@
 package fr.g4zoo.fantastizoo.models.creatures;
 
+import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
+
 public abstract class Viviparous extends Creature {
     private int gestationLength;
     private boolean isPregnant;
@@ -22,7 +24,7 @@ public abstract class Viviparous extends Creature {
         this.isPregnant = isPregnant;
     }
 
-    public void giveBirth() {
+    public void giveBirth(Enclosure enclosure) {
         if (this.getGender() != 'f' || this.getAge() < 18) {
             return;
         }
@@ -31,19 +33,16 @@ public abstract class Viviparous extends Creature {
             return;
         }
 
-        System.out.println(this.getName() + " est enceinte.");
+        System.out.println(enclosure.getName() + ": " + this.getName() + " est enceinte.");
         this.setPregnant(true);
         simulateGestationPeriod(() -> {
             Creature baby = createBaby();
-            System.out.println(this.getName() + " a donné naissance à un bébé : " + baby.getName() + " !");
-            addBabyToZoo(baby);
+            System.out.println(enclosure.getName() + ": " + this.getName() + " a donné naissance à un bébé : " + baby.getName() + " !");
             this.setPregnant(false);
         });
     }
 
     protected abstract Creature createBaby();
-
-    protected abstract void addBabyToZoo(Creature baby);
 
     protected void simulateGestationPeriod(Runnable onBirth) {
         new Thread(() -> {
