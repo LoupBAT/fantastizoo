@@ -312,6 +312,7 @@ public abstract class Creature {
             ((Viviparous) this).giveBirth();
         }
     }
+
     protected String generateRandomName(String[] names) {
         return names[RANDOM.nextInt(names.length)];
     }

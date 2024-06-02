@@ -1,5 +1,7 @@
 package fr.g4zoo.fantastizoo.models.enclosures;
 
+import fr.g4zoo.fantastizoo.models.ZooMaster;
+
 public class Aviary extends Enclosure {
     private double height;
 
@@ -18,16 +20,10 @@ public class Aviary extends Enclosure {
         this.height = height;
     }
 
-    // Overide to include the height
     @Override
-    public void displayInformations() {
-        super.displayInformations();
-        System.out.println("Hauteur : " + height + " m");
-    }
-
-    @Override
-    public void getCleaned() {
-        super.getCleaned();
+    public boolean getCleaned(ZooMaster master) {
+        boolean lifeLost = super.getCleaned(master);
         System.out.println("La vérification du toit de la cage a été faite.");
+        return lifeLost;
     }
 }

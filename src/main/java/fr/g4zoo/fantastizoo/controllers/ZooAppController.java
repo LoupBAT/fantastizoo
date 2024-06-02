@@ -15,8 +15,12 @@ import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -100,6 +104,8 @@ public class ZooAppController {
     public ChoiceBox<String> enclosureListTransfer;
 
     private Zoo zoo;
+
+    private ZooMaster zooMaster;
 
     private Enclosure selectedEnclosure;
 
@@ -185,9 +191,12 @@ public class ZooAppController {
         System.setErr(ps);
 
         zoo = new Zoo(zooName, master);
-        this.zooName.setText(zooName);
-        this.zooMasterName.setText(master.getName());
-        this.zooMasterHp.setText(master.getHp() + "");
+        this.zooMaster = master;
+        Platform.runLater(() -> {
+            this.zooName.setText(zooName);
+            this.zooMasterName.setText(master.getName());
+            this.zooMasterHp.setText(master.getHp() + "");
+        });
 
         Aviary aviary = new Aviary("Phénix 1", 500.0, 20.0);
 
@@ -207,7 +216,7 @@ public class ZooAppController {
         zoo.addEnclosure(enclosure1);
         zoo.addEnclosure(enclosure2);
         startPeriodicUpdateThread();
-        updateUI();
+        Platform.runLater(this::updateUI);
 
         enclosureListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -278,36 +287,40 @@ public class ZooAppController {
     }
 
     private void updateSelectedEnclosure(String enclosureName) {
-        if (enclosureName != null) {
-            selectedEnclosure = zoo.getEnclosureByName(enclosureName);
-            if (selectedEnclosure != null) {
-                enclosure_area.setText(selectedEnclosure.getArea() + " m2");
-                enclosure_capacity.setText(selectedEnclosure.getCreatureNumber() + "/" + selectedEnclosure.getMaxCapacity());
-                enclosure_cleanliness_bar.setProgress((double) selectedEnclosure.getCleanliness() / 100.0);
-                enclosure_cleanliness.setText(selectedEnclosure.getCleanliness() > 75 ? "Propre" : selectedEnclosure.getCleanliness() > 50 ? "Correct" : "Sale");
-                updateCreatureListView((Aviary) selectedEnclosure);
+        Platform.runLater(() -> {
+            if (enclosureName != null) {
+                selectedEnclosure = zoo.getEnclosureByName(enclosureName);
+                if (selectedEnclosure != null) {
+                    enclosure_area.setText(selectedEnclosure.getArea() + " m2");
+                    enclosure_capacity.setText(selectedEnclosure.getCreatureNumber() + "/" + selectedEnclosure.getMaxCapacity());
+                    enclosure_cleanliness_bar.setProgress((double) selectedEnclosure.getCleanliness() / 100.0);
+                    enclosure_cleanliness.setText(selectedEnclosure.getCleanliness() > 75 ? "Propre" : selectedEnclosure.getCleanliness() > 50 ? "Correct" : "Sale");
+                    updateCreatureListView(selectedEnclosure);
+                }
             }
-        }
+        });
     }
 
     private void updateSelectedCreature(String creatureInfo) {
-        if (creatureInfo != null) {
-            int selectedCreatureId = creatureIdMap.get(creatureInfo);
-            selectedCreature = selectedEnclosure.getCreatureById(selectedCreatureId);
-            updateEnclosureListTransfer();
+        Platform.runLater(() -> {
+            if (creatureInfo != null) {
+                int selectedCreatureId = creatureIdMap.get(creatureInfo);
+                selectedCreature = selectedEnclosure.getCreatureById(selectedCreatureId);
+                updateEnclosureListTransfer();
 
-            creature_life_bar.setProgress((double) selectedCreature.getHealth() / 100.0);
-            creature_satiety_bar.setProgress((double) selectedCreature.getSatiety() / 100.0);
+                creature_life_bar.setProgress((double) selectedCreature.getHealth() / 100.0);
+                creature_satiety_bar.setProgress((double) selectedCreature.getSatiety() / 100.0);
 
-            txt_life.setText("" + selectedCreature.getHealth());
-            txt_satiety.setText("" + selectedCreature.getSatiety());
-            txt_creatureName.setText(selectedCreature.getName());
-            txt_creatureAge.setText(selectedCreature.getAge() + " ans");
-            txt_creatureHeight.setText(selectedCreature.getHeight() + " m");
-            txt_creatureWeight.setText(selectedCreature.getWeight() + " kg");
-            txt_creatureGender.setText(selectedCreature.getGender() == 'm' ? "Male" : "Femelle");
-            txt_creatureSleep.setText(selectedCreature.isAsleep() ? "Dort" : "Eveillé");
-        }
+                txt_life.setText("" + selectedCreature.getHealth());
+                txt_satiety.setText("" + selectedCreature.getSatiety());
+                txt_creatureName.setText(selectedCreature.getName());
+                txt_creatureAge.setText(selectedCreature.getAge() + " ans");
+                txt_creatureHeight.setText(selectedCreature.getHeight() + " m");
+                txt_creatureWeight.setText(selectedCreature.getWeight() + " kg");
+                txt_creatureGender.setText(selectedCreature.getGender() == 'm' ? "Male" : "Femelle");
+                txt_creatureSleep.setText(selectedCreature.isAsleep() ? "Dort" : "Eveillé");
+            }
+        });
     }
 
     void updateEnclosureListTransfer() {
@@ -400,8 +413,34 @@ public class ZooAppController {
                 System.out.println(deadCreature.getName() + " a été retiré de l'enclos car il est mort.");
             }
 
-            selectedEnclosure.getCleaned();
+            boolean lifeLost = selectedEnclosure.getCleaned(zoo.getZooMaster());
             updateSelectedEnclosure(selectedEnclosure.getName());
+
+            if (lifeLost) {
+                Platform.runLater(() -> {
+                    this.zooMasterHp.setText(String.valueOf(zoo.getZooMaster().getHp()));
+                    if (zoo.getZooMaster().getHp() <= 0) {
+                        showGameOverView(watch.getTime());
+                    }
+                });
+            }
+        }
+    }
+
+    private void showGameOverView(String timeValue) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/g4zoo/fantastizoo/gameover.fxml"));
+            Parent root = loader.load();
+
+            GameOverController controller = loader.getController();
+            controller.setTime(timeValue);
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) zooName.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
