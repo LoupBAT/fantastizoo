@@ -29,17 +29,65 @@ Here're some of the project's best features:
 
 <h2>🛠️ Installation Steps:</h2>
 
-<p>1. Clone the repository</p>
+<p>1. For intelij :</p>
+
+<p>2. Clone the repository</p>
 
 ```
 git clone https://github.com/LoupBAT/fantastizoo.git
 ```
 
-<p>2. Open with inteliJ</p>
+<p>3. Open with inteliJ</p>
 
-<p>3. build the project with Maven</p>
+<p>4. build the project and build also with Maven</p>
 
-<p>4. Run ZooApp.java</p>
+<p>5. Run ZooApp.java</p>
+
+<p>6. For Eclipse :</p>
+
+<p>7. Clone the repository</p>
+
+```
+git clone https://github.com/LoupBAT/fantastizoo.git
+```
+
+<p>8. Open eclipse 2024</p>
+
+<p>9. Importer le projet Maven:</p>
+
+```
+Allez dans File > Import > Maven > Existing Maven Projects
+```
+
+<p>10. Sélectionner le répertoire du projet</p>
+
+```
+Cliquez sur Browse et sélectionnez le répertoire racine de votre projet qui contient le fichier pom.xml.
+```
+
+<p>11. Finaliser l'importation</p>
+
+```
+Sélectionnez le projet à importer et cliquez sur Finish.
+```
+
+<p>12. Utiliser des Plugins Maven pour Eclipse:</p>
+
+<p>13. Allez dans Help &gt; Eclipse Marketplace.</p>
+
+<p>14. Recherchez Maven Integration for Eclipse.</p>
+
+<p>15. Installez le plugin</p>
+
+```
+Vous allez devoir relancer eclipse à la fin de l'installation pour bien installer le plugin. 
+```
+
+<p>16. Exécuter le projet:</p>
+
+```
+Run ZooApp.java
+```
 
   
   
