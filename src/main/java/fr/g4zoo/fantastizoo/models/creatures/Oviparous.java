@@ -16,6 +16,11 @@ public abstract class Oviparous extends Creature {
         this.incubationPeriod = incubationPeriod;
     }
 
+    /**
+     * Lay egg.
+     *
+     * @param enclosure the enclosure where the egg will spawn
+     */
     public void layEgg(Enclosure enclosure) {
         if (this.getGender() != 'f' || this.getAge() < 10) {
             return;
@@ -28,8 +33,18 @@ public abstract class Oviparous extends Creature {
         });
     }
 
+    /**
+     * Create baby creature.
+     *
+     * @return the creature
+     */
     protected abstract Creature createBaby();
 
+    /**
+     * Simulate incubation period.
+     *
+     * @param onHatch the on hatch
+     */
     protected void simulateIncubationPeriod(Runnable onHatch) {
         new Thread(() -> {
             try {

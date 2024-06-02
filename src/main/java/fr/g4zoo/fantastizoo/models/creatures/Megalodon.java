@@ -9,7 +9,17 @@ public class Megalodon extends Oviparous implements Swimmer {
     private static final String[] NAMES = {"Leviathan", "Tsunami", "Poseidon", "Jaws", "Riptide", "Shadow", "Goliath", "Behemoth", "Megalodon"};
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Megalodon.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Megalodon(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);

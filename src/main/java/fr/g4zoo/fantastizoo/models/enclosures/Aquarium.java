@@ -6,7 +6,15 @@ public class Aquarium extends Enclosure {
     private double depth;
     private double waterSalinity;
 
-    // Constructor
+    /**
+     * Instantiates a new Aquarium.
+     *
+     * @param name          the name
+     * @param area          the area
+     * @param depth         the depth
+     * @param waterSalinity the water salinity
+     */
+// Constructor
     public Aquarium(String name, double area, double depth, double waterSalinity) {
         super(name, area);
         this.depth = depth;

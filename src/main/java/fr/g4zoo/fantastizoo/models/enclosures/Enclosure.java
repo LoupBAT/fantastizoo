@@ -18,7 +18,13 @@ public class Enclosure {
     private List<Creature> creatures;
     private static final Random RANDOM = new Random();
 
-    // Constructor
+    /**
+     * Instantiates a new Enclosure.
+     *
+     * @param name the name
+     * @param area the area
+     */
+// Constructor
     public Enclosure(String name, double area) {
         this.name = name;
         this.area = area;
@@ -28,7 +34,7 @@ public class Enclosure {
         this.creatures = new ArrayList<>();
     }
 
-    // Getters et Setters
+// Getters et Setters
     public String getName() {
         return name;
     }
@@ -69,6 +75,11 @@ public class Enclosure {
         return creatures;
     }
 
+    /**
+     * Add creature.
+     *
+     * @param creature the creature
+     */
     public void addCreature(Creature creature) {
         if (creatureNumber < maxCapacity) {
             creatures.add(creature);
@@ -78,6 +89,11 @@ public class Enclosure {
         }
     }
 
+    /**
+     * Remove creature.
+     *
+     * @param creature the creature
+     */
     public void removeCreature(Creature creature) {
         if (creatures.remove(creature)) {
             creatureNumber--;
@@ -86,6 +102,9 @@ public class Enclosure {
         }
     }
 
+    /**
+     * Feed creatures.
+     */
     public void feedCreatures() {
         if (creatureNumber > 0) {
             for (Creature creature : creatures) {
@@ -98,6 +117,12 @@ public class Enclosure {
         }
     }
 
+    /**
+     * Gets cleaned.
+     *
+     * @param zooMaster the zoo master
+     * @return the cleaned
+     */
     public boolean getCleaned(ZooMaster zooMaster) {
         boolean lifeLost = false;
         synchronized (cleanlinessLock) {
@@ -127,6 +152,12 @@ public class Enclosure {
         return lifeLost;
     }
 
+    /**
+     * Get creature by id creature.
+     *
+     * @param id the id
+     * @return the creature
+     */
     public Creature getCreatureById(int id){
         for (Creature creature : creatures) {
             if (creature.getId() == id) {
@@ -136,6 +167,9 @@ public class Enclosure {
         return null;
     }
 
+    /**
+     * Periodic update.
+     */
     public void periodicUpdate() {
         synchronized (cleanlinessLock) {
             int decrease = RANDOM.nextInt(6);

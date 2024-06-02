@@ -11,6 +11,9 @@ import javax.sound.sampled.*;
 
 import java.util.Random;
 
+/**
+ * The type Creature.
+ */
 public abstract class Creature {
 
     private static final Random RANDOM = new Random();
@@ -33,8 +36,10 @@ public abstract class Creature {
     private boolean isSick;
     private boolean isDead = false;
 
-    // CONSTRUCTORS
 
+    /**
+     * Instantiates a new Creature.
+     */
     public Creature() {
         this.id = nextId++;
     }
@@ -150,13 +155,22 @@ public abstract class Creature {
     }
 
     // METHODS
-
+    /**
+     * round to two decimal places.
+     *
+     * @param value the value to convert
+     */
     private double roundToTwoDecimalPlaces(double value) {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 
+    /**
+     * Eat.
+     *
+     * @param satietyPoint the satiety point
+     */
     public void eat(int satietyPoint) {
         int newSatiety = this.getSatiety() + satietyPoint;
         this.setSatiety(newSatiety);
@@ -195,6 +209,11 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * Make sound.
+     *
+     * @param soundUrl the sound url
+     */
     public void makeSound(String soundUrl) {
         try {
             URL url = new URL(soundUrl);
@@ -207,20 +226,34 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * Healing.
+     *
+     * @param healingPoint the healing point
+     */
     public void healing(int healingPoint) {
         this.setHealth(this.getHealth() + healingPoint);
         this.setHealth(Math.min(this.getHealth(), 100));
         this.isSick = false;
     }
 
+    /**
+     * Sleep.
+     */
     public void sleep(){
         this.setAsleep(true);
     }
 
+    /**
+     * Wake up.
+     */
     public void wakeUp() {
         this.setAsleep(false);
     }
 
+    /**
+     * Grow old.
+     */
     public void growOld() {
         Random random = new Random();
         this.setAge(this.getAge() + 1);
@@ -246,6 +279,11 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * Periodic update.
+     *
+     * @param enclosure the enclosure
+     */
     public void periodicUpdate(Enclosure enclosure) {
         growOld();
 
@@ -313,22 +351,52 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * Generate random name string.
+     *
+     * @param names the names
+     * @return the string
+     */
     protected String generateRandomName(String[] names) {
         return names[RANDOM.nextInt(names.length)];
     }
 
+    /**
+     * Generate random gender char.
+     *
+     * @return the char
+     */
     protected char generateRandomGender() {
         return RANDOM.nextBoolean() ? 'm' : 'f';
     }
 
+    /**
+     * Generate random weight double.
+     *
+     * @param min the min
+     * @param max the max
+     * @return the double
+     */
     protected double generateRandomWeight(double min, double max) {
         return min + (max - min) * RANDOM.nextDouble();
     }
 
+    /**
+     * Generate random height double.
+     *
+     * @param min the min
+     * @param max the max
+     * @return the double
+     */
     protected double generateRandomHeight(double min, double max) {
         return min + (max - min) * RANDOM.nextDouble();
     }
 
+    /**
+     * Generate random age max int.
+     *
+     * @return the int
+     */
     protected int generateRandomAgeMax() {
         Random random = new Random();
         return random.nextInt(131) + 20;

@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 
+/**
+ * The type Zoo app controller.
+ */
 public class ZooAppController {
 
     @FXML
@@ -96,6 +99,9 @@ public class ZooAppController {
     @FXML
     private Text txt_time;
 
+    /**
+     * The Enclosure list transfer.
+     */
     @FXML
     public ChoiceBox<String> enclosureListTransfer;
 
@@ -117,18 +123,36 @@ public class ZooAppController {
 
     private Thread periodicUpdateThread;
 
+    /**
+     * Gets zoo.
+     *
+     * @return the zoo
+     */
     public Zoo getZoo() {
         return zoo;
     }
 
+    /**
+     * Gets selected enclosure.
+     *
+     * @return the selected enclosure
+     */
     public Enclosure getSelectedEnclosure() {
         return selectedEnclosure;
     }
 
+    /**
+     * Gets selected creature.
+     *
+     * @return the selected creature
+     */
     public Creature getSelectedCreature() {
         return selectedCreature;
     }
 
+    /**
+     * The Welcome thread.
+     */
     Thread welcomeThread = new Thread(() -> {
         try {
             Thread.sleep(1000);
@@ -160,6 +184,13 @@ public class ZooAppController {
         periodicUpdateThread.start();
     }
 
+    /**
+     * Initialize.
+     *
+     * @param master  the master
+     * @param zooName the zoo name
+     * @throws IOException the io exception
+     */
     public void initialize(ZooMaster master, String zooName) throws IOException {
         welcomeThread.start();
 
@@ -194,6 +225,9 @@ public class ZooAppController {
             this.zooMasterHp.setText(master.getHp() + "");
         });
 
+        /**
+         * Initialize the enclosures.
+         */
         Aviary aviary1 = new Aviary("Phénix 1", 500.0, 20.0);
         Aviary aviary2 = new Aviary("Phénix 2", 800.0, 30.0);
         Enclosure enclosure1 = new Enclosure("Dragon 1", 800.0);
@@ -210,47 +244,34 @@ public class ZooAppController {
         Enclosure enclosure6 = new Enclosure("Nymph 2", 800.0);
         Aviary aviary3 = new Aviary("Unicorn 1", 500.0, 20.0);
         Aviary aviary4 = new Aviary("Unicorn 2", 800.0, 30.0);
-
+        /**
+         * Initialize the creatures.
+         */
         Phoenix phoenixMale = new Phoenix("Ember", aviary1, 'm', 15, 10.0, 2.0);
         Phoenix phoenixFemale = new Phoenix("Blaze", aviary1, 'f', 12, 8.0, 1.8);
         Phoenix newPhoenixMale = new Phoenix("Fawkes", aviary2, 'm', 20, 12.0, 2.2);
         Phoenix newPhoenixFemale = new Phoenix("Pyro", aviary2, 'f', 18, 9.0, 2.0);
-
         Dragon dragonMale = new Dragon("Draco", enclosure1, 'm', 15, 80.0, 2.5);
         Dragon dragonFemale = new Dragon("Saphira", enclosure2, 'f', 15, 75.0, 2.3);
         Dragon dragonMale2 = new Dragon("Toothless", enclosure1, 'm', 20, 70.0, 2.0);
-
-
         Kraken krakenMale = new Kraken("Tentaculus", aquarium1, 'm', 15, 2000.0, 5.0);
         Kraken krakenFemale = new Kraken("Coralus", aquarium2, 'f', 15, 1800.0, 4.5);
         Kraken krakenFemale2 = new Kraken("Squidicus", aquarium2, 'f', 18, 1900.0, 4.7);
-
-
         Lycanthrope lycanMale = new Lycanthrope("Fenrir", enclosure3, 'm', 15, 150.0, 1.8);
         Lycanthrope lycanFemale = new Lycanthrope("Lupa", enclosure4, 'f', 15, 140.0, 1.7);
         Lycanthrope lycanMale2 = new Lycanthrope("Remus", enclosure3, 'm', 25, 160.0, 1.9);
-
-
         Megalodon megaMale = new Megalodon("Leviathan", aquarium3, 'm', 15, 3000.0, 6.0);
         Megalodon megaFemale = new Megalodon("Tsunami", aquarium4, 'f', 15, 2800.0, 5.5);
         Megalodon megaFemale2 = new Megalodon("Riptide", aquarium4, 'f', 22, 2600.0, 5.2);
-
-
         Mermaid mermaidMale = new Mermaid("Ariel", aquarium5, 'f', 15, 50.0, 1.5);
         Mermaid mermaidFemale = new Mermaid("Nerissa", aquarium6, 'f', 15, 48.0, 1.4);
         Mermaid mermaidMale2 = new Mermaid("Marina", aquarium5, 'f', 21, 45.0, 1.4);
-
-
-
         Nymph nyphMale = new Nymph("Aurora", enclosure5, 'm', 15, 0.5, 0.3);
         Nymph nyphFemale = new Nymph("Nova", enclosure6, 'f', 15, 0.4, 0.25);
         Nymph nyphFemale2 = new Nymph("Luna", enclosure5, 'f', 20, 0.6, 0.35);
-
-
         Unicorn unicornMale = new Unicorn("Celestia", aviary3, 'm', 15, 550.0, 1.7);
         Unicorn unicornFemale = new Unicorn("Luna", aviary4, 'f', 15, 520.0, 1.6);
         Unicorn unicornMale2 = new Unicorn("Sparkle", aviary3, 'm', 18, 500.0, 1.6);
-
 
         zoo.addEnclosure(aviary1);
         zoo.addEnclosure(aviary2);
@@ -314,7 +335,10 @@ public class ZooAppController {
             }
         });
     }
-
+    /**
+     * Display the enclosure list.
+     * Display total amount of creatures
+     */
     private void updateUI() {
         if (zoo != null) {
             int totalCreatureCount = 0;
@@ -329,6 +353,11 @@ public class ZooAppController {
         }
     }
 
+    /**
+     * update the Creature List View.
+     *
+     * @param enclosure  the enclosure
+     */
     private void updateCreatureListView(Enclosure enclosure) {
         creatureListView.getItems().clear();
         creatureIdMap.clear();
@@ -340,6 +369,9 @@ public class ZooAppController {
         });
     }
 
+    /**
+     * update the data oh the selected enclosure.
+     */
     private void updateSelectedEnclosure(String enclosureName) {
         Platform.runLater(() -> {
             if (enclosureName != null) {
@@ -355,6 +387,9 @@ public class ZooAppController {
         });
     }
 
+    /**
+     * update the data oh the selected creature.
+     */
     private void updateSelectedCreature(String creatureInfo) {
         Platform.runLater(() -> {
             if (creatureInfo != null) {
@@ -377,6 +412,9 @@ public class ZooAppController {
         });
     }
 
+    /**
+     * Update enclosure list transfer.
+     */
     void updateEnclosureListTransfer() {
         if (this.getZoo() != null) {
             Zoo zoo = this.getZoo();
@@ -395,6 +433,11 @@ public class ZooAppController {
         }
     }
 
+    /**
+     * On click heal.
+     *
+     * @param event the event
+     */
     @FXML
     public void onClickHeal(ActionEvent event) {
         if (!this.selectedCreature.isDead()) {
@@ -404,6 +447,11 @@ public class ZooAppController {
         }
     }
 
+    /**
+     * On click train.
+     *
+     * @param event the event
+     */
     @FXML
     public void onClickTrain(ActionEvent event) {
         if (!this.selectedCreature.isDead()) {
@@ -424,6 +472,11 @@ public class ZooAppController {
         }
     }
 
+    /**
+     * reduce weight.
+     *
+     * @param amount the amount of the reduction
+     */
     private void reduceWeight(double amount) {
         double currentWeight = this.getSelectedCreature().getWeight();
         double newWeight = currentWeight - amount;
@@ -433,6 +486,11 @@ public class ZooAppController {
         this.getSelectedCreature().setWeight(newWeight);
     }
 
+    /**
+     * On click transfer.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onClickTransfer(ActionEvent actionEvent) {
         if (!this.selectedCreature.isDead()) {
@@ -449,6 +507,11 @@ public class ZooAppController {
         }
     }
 
+    /**
+     * On click clean.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onClickClean(ActionEvent actionEvent) {
         Enclosure selectedEnclosure = getSelectedEnclosure();
@@ -481,6 +544,11 @@ public class ZooAppController {
         }
     }
 
+    /**
+     * show game overview.
+     *
+     * @param timeValue the time for the game over screen
+     */
     private void showGameOverView(String timeValue) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/g4zoo/fantastizoo/gameover.fxml"));
@@ -498,6 +566,11 @@ public class ZooAppController {
         }
     }
 
+    /**
+     * On click feed.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onClickFeed(ActionEvent actionEvent) {
         getSelectedEnclosure().feedCreatures();

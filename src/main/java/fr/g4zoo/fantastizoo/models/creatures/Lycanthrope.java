@@ -8,7 +8,17 @@ public class Lycanthrope extends Viviparous implements Runner {
     private static final String[] NAMES = {"Fenrir", "Remus", "Lupa", "Lycus", "Theron", "Ulric"};
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Lycanthrope.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Lycanthrope(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setGestationLength(DEFAULT_GESTATION_PERIOD);

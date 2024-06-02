@@ -24,6 +24,11 @@ public abstract class Viviparous extends Creature {
         this.isPregnant = isPregnant;
     }
 
+    /**
+     * Give birth.
+     *
+     * @param enclosure the enclosure
+     */
     public void giveBirth(Enclosure enclosure) {
         if (this.getGender() != 'f' || this.getAge() < 18) {
             return;
@@ -42,8 +47,18 @@ public abstract class Viviparous extends Creature {
         });
     }
 
+    /**
+     * Create baby creature.
+     *
+     * @return the creature
+     */
     protected abstract Creature createBaby();
 
+    /**
+     * Simulate gestation period.
+     *
+     * @param onBirth the on birth
+     */
     protected void simulateGestationPeriod(Runnable onBirth) {
         new Thread(() -> {
             try {

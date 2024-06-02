@@ -8,6 +8,13 @@ public class ZooMaster {
     private int hp = 3;
     private int action =5;
 
+    /**
+     * Instantiates a new Zoo master.
+     *
+     * @param name   the name
+     * @param gender the gender
+     * @param age    the age
+     */
     // Constructor
     public ZooMaster(String name, Character gender, int age) {
         this.name = name;

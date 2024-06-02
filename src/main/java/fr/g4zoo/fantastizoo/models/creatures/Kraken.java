@@ -10,7 +10,17 @@ public class Kraken extends Oviparous implements Swimmer {
 
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Kraken.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Kraken(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);

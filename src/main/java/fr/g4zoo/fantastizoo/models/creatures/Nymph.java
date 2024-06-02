@@ -9,7 +9,17 @@ public class Nymph extends Viviparous implements Reborner {
     private Enclosure enclosure;
     private int rebornCount = 0;
 
-    // Constructor
+    /**
+     * Instantiates a new Nymph.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Nymph(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setGestationLength(DEFAULT_GESTATION_PERIOD);

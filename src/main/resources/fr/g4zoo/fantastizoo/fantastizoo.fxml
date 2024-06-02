@@ -104,12 +104,12 @@
                                     <Font name="System Bold" size="25.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="txt_creatureAge" layoutX="222.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                              <Text fx:id="txt_creatureAge" layoutX="258.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="txt_creatureHeight" layoutX="141.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                              <Text fx:id="txt_creatureHeight" layoutX="159.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0">
                                  <font>
                                     <Font size="19.0" />
                                  </font>

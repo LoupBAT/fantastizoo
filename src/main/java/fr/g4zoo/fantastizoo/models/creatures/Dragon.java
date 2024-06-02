@@ -12,7 +12,17 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
     private int rebornCount = 0;
     private static final int MAX_REBORN_COUNT = 3;
 
-    // Constructeur
+    /**
+     * Instantiates a new Dragon.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructeur
     public Dragon(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);

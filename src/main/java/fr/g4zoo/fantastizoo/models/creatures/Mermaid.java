@@ -8,7 +8,17 @@ public class Mermaid extends Viviparous implements Swimmer {
     private static final String[] NAMES = {"Ariel", "Marina", "Nerissa", "Ondine", "Sirena", "Thalassa"};
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Mermaid.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Mermaid(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setGestationLength(DEFAULT_GESTATION_PERIOD);

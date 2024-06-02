@@ -11,6 +11,16 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     private Enclosure enclosure;
     private int rebornCount = 0;
 
+    /**
+     * Instantiates a new Phoenix.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
     public Phoenix(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);

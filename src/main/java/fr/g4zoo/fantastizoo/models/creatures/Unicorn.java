@@ -8,7 +8,17 @@ public class Unicorn extends Viviparous implements Runner {
     private static final String[] NAMES = {"Celestia", "Sparkle", "Blaze", "Luna", "Aurora", "Starlight"};
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Unicorn.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Unicorn(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setGestationLength(DEFAULT_GESTATION_PERIOD);

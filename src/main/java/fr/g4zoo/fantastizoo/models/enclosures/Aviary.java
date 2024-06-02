@@ -5,6 +5,13 @@ import fr.g4zoo.fantastizoo.models.ZooMaster;
 public class Aviary extends Enclosure {
     private double height;
 
+    /**
+     * Instantiates a new Aviary.
+     *
+     * @param name   the name
+     * @param area   the area
+     * @param height the height
+     */
     // Constructor
     public Aviary(String name, double area, double height) {
         super(name, area);

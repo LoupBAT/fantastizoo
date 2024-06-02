@@ -9,6 +9,11 @@ import java.io.UnsupportedEncodingException;
 public class Console extends OutputStream {
     private TextArea output;
 
+    /**
+     * Instantiates a new Console.
+     *
+     * @param textArea the text area
+     */
     public Console(TextArea textArea) {
         this.output = textArea;
     }

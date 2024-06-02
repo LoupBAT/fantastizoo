@@ -31,6 +31,11 @@ public class ZooMasterController {
     @FXML
     private TextField zoo;
 
+    /**
+     * On click cancel.
+     *
+     * @param event the event
+     */
     @FXML
     void onClickCancel(ActionEvent event) {
         men.setSelected(false);
@@ -40,6 +45,11 @@ public class ZooMasterController {
         zoo.clear();
     }
 
+    /**
+     * On click check box.
+     *
+     * @param event the event
+     */
     @FXML
     void onClickCheckBox(ActionEvent event) {
         switch (((CheckBox) event.getSource()).getId()) {
@@ -53,6 +63,12 @@ public class ZooMasterController {
     }
 
 
+    /**
+     * On click save.
+     *
+     * @param event the event
+     * @throws IOException the io exception
+     */
     @FXML
     void onClickSave(ActionEvent event) throws IOException {
         String nameValue = name.getText();
