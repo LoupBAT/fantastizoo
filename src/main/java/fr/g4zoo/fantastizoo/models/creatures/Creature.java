@@ -222,7 +222,16 @@ public abstract class Creature {
     }
 
     public void growOld() {
+        Random random = new Random();
         this.setAge(this.getAge() + 1);
+
+        double weightIncrease = 1.0 + (2.0 - 0.5) * random.nextDouble();
+        this.setWeight(this.getWeight() + weightIncrease);
+
+        if (this.getAge() < 30) {
+            double heightIncrease = 0.1 + (1.0 - 0.1) * random.nextDouble();
+            this.setHeight(this.getHeight() + heightIncrease);
+        }
 
         if (this.getAge() > ageMax) {
             if (this instanceof Reborner) {
