@@ -1,8 +1,19 @@
 package fr.g4zoo.fantastizoo.models.enclosures;
 
+import fr.g4zoo.fantastizoo.models.ZooMaster;
+/**
+ * The type Aviary.
+ */
 public class Aviary extends Enclosure {
     private double height;
 
+    /**
+     * Instantiates a new Aviary.
+     *
+     * @param name   the name
+     * @param area   the area
+     * @param height the height
+     */
     // Constructor
     public Aviary(String name, double area, double height) {
         super(name, area);
@@ -18,16 +29,10 @@ public class Aviary extends Enclosure {
         this.height = height;
     }
 
-    // Overide to include the height
     @Override
-    public void displayInformations() {
-        super.displayInformations();
-        System.out.println("Hauteur : " + height + " m");
-    }
-
-    @Override
-    public void getCleaned() {
-        super.getCleaned();
+    public boolean getCleaned(ZooMaster master) {
+        boolean lifeLost = super.getCleaned(master);
         System.out.println("La vérification du toit de la cage a été faite.");
+        return lifeLost;
     }
 }

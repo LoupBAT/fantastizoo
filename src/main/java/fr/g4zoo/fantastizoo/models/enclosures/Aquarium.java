@@ -1,10 +1,22 @@
 package fr.g4zoo.fantastizoo.models.enclosures;
 
+import fr.g4zoo.fantastizoo.models.ZooMaster;
+/**
+ * The type Aquarium.
+ */
 public class Aquarium extends Enclosure {
     private double depth;
     private double waterSalinity;
 
-    // Constructor
+    /**
+     * Instantiates a new Aquarium.
+     *
+     * @param name          the name
+     * @param area          the area
+     * @param depth         the depth
+     * @param waterSalinity the water salinity
+     */
+// Constructor
     public Aquarium(String name, double area, double depth, double waterSalinity) {
         super(name, area);
         this.depth = depth;
@@ -28,17 +40,10 @@ public class Aquarium extends Enclosure {
         this.waterSalinity = waterSalinity;
     }
 
-    // Overide to include the depth and waterSalinity
     @Override
-    public void displayInformations() {
-        super.displayInformations();
-        System.out.println("Profondeur : " + depth + " m");
-        System.out.println("Salinité de l'eau : " + waterSalinity + " ‰");
-    }
-
-    @Override
-    public void getCleaned() {
-        super.getCleaned();
-        System.out.println("La vérification de la profondeur du bassin et la salinité de l'eau a été faite.");
+    public boolean getCleaned(ZooMaster master) {
+        boolean lifeLost = super.getCleaned(master);
+        System.out.println("La vérification du volume d'eau a été faite.");
+        return lifeLost;
     }
 }

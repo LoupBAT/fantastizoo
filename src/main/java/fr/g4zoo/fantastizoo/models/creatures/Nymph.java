@@ -2,14 +2,26 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Nymph.
+ */
 public class Nymph extends Viviparous implements Reborner {
     private static final int DEFAULT_GESTATION_PERIOD = 6;
     private static final String[] NAMES = {"Astra", "Luna", "Selene", "Nyx", "Aurora", "Celeste", "Eos", "Nova"};
     private Enclosure enclosure;
     private int rebornCount = 0;
 
-    // Constructor
+    /**
+     * Instantiates a new Nymph.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Nymph(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setGestationLength(DEFAULT_GESTATION_PERIOD);
@@ -21,23 +33,11 @@ public class Nymph extends Viviparous implements Reborner {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * Create a baby after the gestation period of the mom
+     */
     @Override
-    public void giveBirth() {
-        if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
-            return;
-        }
-
-        System.out.println(this.getName() + " est enceinte.");
-        simulateGestationPeriod(() -> {
-            Nymph babyNymph = createBabyNymph();
-            System.out.println(this.getName() + " a donné naissance à une bébé nymphe : " + babyNymph.getName() + " !");
-            addBabyNymphToZoo(babyNymph);
-        });
-    }
-
-    private Nymph createBabyNymph() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(2.0, 4.0);
@@ -45,30 +45,30 @@ public class Nymph extends Viviparous implements Reborner {
 
         return new Nymph(babyName, this.enclosure, gender, 1, weight, height);
     }
-
-    private void addBabyNymphToZoo(Nymph babyNymph) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(babyNymph);
-        }
-        System.out.println("Bébé nymphe ajouté au zoo : " + babyNymph.getName());
-    }
-
+    /**
+     * The nymph can reborn 3 times
+     */
     @Override
     public void reborn() {
         if (canReborn()) {
             rebornCount++;
-            System.out.println(this.getName() + " renaît de ses cendres !");
+            System.out.println(this.getName() + " renaît !");
             resetToBabyState();
         } else {
-            System.out.println(this.getName() + " ne peut plus renaître.");
+            this.setDead(true);
+            this.setSatiety(0);
         }
     }
-
+    /**
+     * Check if the nymph have reached the max reborn count
+     */
     @Override
     public boolean canReborn() {
         return rebornCount < MAX_REBORN_COUNT;
     }
-
+    /**
+     * When the nymph have reborned she was reset as a newborn
+     */
     private void resetToBabyState() {
         this.setAge(0);
         this.setWeight(generateRandomWeight(2.0, 4.0));

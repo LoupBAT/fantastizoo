@@ -2,13 +2,25 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Lycanthrope.
+ */
 public class Lycanthrope extends Viviparous implements Runner {
     private static final int DEFAULT_GESTATION_PERIOD = 9;
     private static final String[] NAMES = {"Fenrir", "Remus", "Lupa", "Lycus", "Theron", "Ulric"};
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Lycanthrope.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Lycanthrope(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setGestationLength(DEFAULT_GESTATION_PERIOD);
@@ -20,23 +32,11 @@ public class Lycanthrope extends Viviparous implements Runner {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * Create a baby after the gestation period of the mom
+     */
     @Override
-    public void giveBirth() {
-        if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
-            return;
-        }
-
-        System.out.println(this.getName() + " est enceinte.");
-        simulateGestationPeriod(() -> {
-            Lycanthrope babyLycanthrope = createBabyLycanthrope();
-            System.out.println(this.getName() + " a donné naissance à un bébé lycanthrope : " + babyLycanthrope.getName() + " !");
-            addBabyLycanthropeToZoo(babyLycanthrope);
-        });
-    }
-
-    private Lycanthrope createBabyLycanthrope() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(3.0, 5.0);
@@ -45,13 +45,9 @@ public class Lycanthrope extends Viviparous implements Runner {
         return new Lycanthrope(babyName, this.enclosure, gender, 1, weight, height);
     }
 
-    private void addBabyLycanthropeToZoo(Lycanthrope babyLycanthrope) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(babyLycanthrope);
-        }
-        System.out.println("Bébé lycanthrope ajouté au zoo : " + babyLycanthrope.getName());
-    }
-
+    /**
+     * When the Lycanthrope is trained he can run.
+     */
     @Override
     public void run() {
         System.out.println(this.getName() + " court à pleine vitesse !");

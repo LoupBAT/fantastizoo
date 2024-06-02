@@ -2,13 +2,25 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Mermaid.
+ */
 public class Mermaid extends Viviparous implements Swimmer {
     private static final int DEFAULT_GESTATION_PERIOD = 12;
     private static final String[] NAMES = {"Ariel", "Marina", "Nerissa", "Ondine", "Sirena", "Thalassa"};
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Mermaid.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Mermaid(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setGestationLength(DEFAULT_GESTATION_PERIOD);
@@ -20,23 +32,11 @@ public class Mermaid extends Viviparous implements Swimmer {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * Create a baby after the gestation period of the mom
+     */
     @Override
-    public void giveBirth() {
-        if (this.getGender() != 'f' || this.getAge() < 18) {
-            System.out.println(this.getName() + " ne peut pas donner naissance.");
-            return;
-        }
-
-        System.out.println(this.getName() + " est enceinte.");
-        simulateGestationPeriod(() -> {
-            Mermaid babyMermaid = createBabyMermaid();
-            System.out.println(this.getName() + " a donné naissance à une bébé sirène : " + babyMermaid.getName() + " !");
-            addBabyMermaidToZoo(babyMermaid);
-        });
-    }
-
-    private Mermaid createBabyMermaid() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(2.0, 4.0);
@@ -44,14 +44,9 @@ public class Mermaid extends Viviparous implements Swimmer {
 
         return new Mermaid(babyName, this.enclosure, gender, 1, weight, height);
     }
-
-    private void addBabyMermaidToZoo(Mermaid babyMermaid) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(babyMermaid);
-        }
-        System.out.println("Bébé sirène ajouté au zoo : " + babyMermaid.getName());
-    }
-
+    /**
+     * When the mermaid is trained she can swim.
+     */
     @Override
     public void swim() {
         System.out.println(this.getName() + " nage avec élégance !");

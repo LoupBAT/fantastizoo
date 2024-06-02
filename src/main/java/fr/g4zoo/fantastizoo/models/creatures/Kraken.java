@@ -2,7 +2,9 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Kraken.
+ */
 public class Kraken extends Oviparous implements Swimmer {
 
     private static final int DEFAULT_INCUBATION_PERIOD = 5;
@@ -10,7 +12,17 @@ public class Kraken extends Oviparous implements Swimmer {
 
     private Enclosure enclosure;
 
-    // Constructor
+    /**
+     * Instantiates a new Kraken.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
+// Constructor
     public Kraken(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);
@@ -22,40 +34,23 @@ public class Kraken extends Oviparous implements Swimmer {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
-    @Override
-    public void layEgg() {
-        if (this.getGender() != 'f' || this.getAge() < 10) {
-            System.out.println(this.getName() + " ne peut pas pondre d'œuf.");
-            return;
-        }
-
-        System.out.println(this.getName() + " a pondu un œuf.");
-        simulateIncubationPeriod(() -> {
-            Kraken babyKraken = createBabyKraken();
-            System.out.println("L'œuf de " + getName() + " a éclos et un bébé kraken est né : " + babyKraken.getName() + " !");
-            addBabyKrakenToZoo(babyKraken);
-        });
-    }
-
+    /**
+     * When the kraken is trained he can swim.
+     */
     @Override
     public void swim() {
         System.out.println(this.getName() + " nage !");
     }
-
-    private Kraken createBabyKraken() {
+    /**
+     * Create a baby after the incubation period of the egg
+     */
+    @Override
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(2000.0, 3000.0);
         double height = generateRandomHeight(5.0, 8.0);
 
         return new Kraken(babyName, this.enclosure, gender, 1, weight, height);
-    }
-
-    private void addBabyKrakenToZoo(Kraken babyKraken) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(babyKraken);
-        }
-        System.out.println("Bébé kraken ajouté au zoo: " + babyKraken.getName());
     }
 }

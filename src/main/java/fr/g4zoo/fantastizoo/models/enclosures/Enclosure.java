@@ -1,10 +1,14 @@
 package fr.g4zoo.fantastizoo.models.enclosures;
 
+import fr.g4zoo.fantastizoo.models.ZooMaster;
 import fr.g4zoo.fantastizoo.models.creatures.Creature;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
+/**
+ * The type Enclosure.
+ */
 public class Enclosure {
 
     private String name;
@@ -12,9 +16,17 @@ public class Enclosure {
     private int maxCapacity;
     private int creatureNumber;
     private int cleanliness;
+    private final Object cleanlinessLock = new Object();
     private List<Creature> creatures;
+    private static final Random RANDOM = new Random();
 
-    // Constructor
+    /**
+     * Instantiates a new Enclosure.
+     *
+     * @param name the name
+     * @param area the area
+     */
+// Constructor
     public Enclosure(String name, double area) {
         this.name = name;
         this.area = area;
@@ -24,7 +36,7 @@ public class Enclosure {
         this.creatures = new ArrayList<>();
     }
 
-    // Getters et Setters
+// Getters et Setters
     public String getName() {
         return name;
     }
@@ -65,50 +77,90 @@ public class Enclosure {
         return creatures;
     }
 
-    public void displayInformations() {
-        System.out.println("Nom de l'enclos : " + name);
-        System.out.println("Superficie : " + area + " m²");
-        System.out.println("Capacité maximale : " + maxCapacity);
-        System.out.println("Nombre de créatures : " + creatureNumber);
-        System.out.println("Propreté : " + cleanliness + "%");
-        System.out.println("Créatures : " + creatures);
-    }
-
+    /**
+     * Add creature to the enclosure.
+     *
+     * @param creature the creature
+     */
     public void addCreature(Creature creature) {
         if (creatureNumber < maxCapacity) {
             creatures.add(creature);
             creatureNumber++;
-            System.out.println("Une créature a été ajoutée : " + creature.getName());
         } else {
             System.out.println("Capacité maximale atteinte ! Impossible d'ajouter une créature.");
         }
     }
 
+    /**
+     * Remove creature from an enclosure.
+     *
+     * @param creature the creature
+     */
     public void removeCreature(Creature creature) {
         if (creatures.remove(creature)) {
             creatureNumber--;
-            System.out.println("Une créature a été retirée : " + creature.getName());
         } else {
             System.out.println("La créature n'a pas été trouvée.");
         }
     }
 
+    /**
+     * Feed creatures of the selected enclosure.
+     */
     public void feedCreatures() {
         if (creatureNumber > 0) {
-            System.out.println("Les créatures ont été nourries.");
             for (Creature creature : creatures) {
-                creature.eat(10);
+                if (!creature.isDead()) {
+                    creature.eat(10);
+                }
             }
         } else {
             System.out.println("Il n'y a pas de créature à nourrir.");
         }
     }
 
-    public void getCleaned() {
-        cleanliness = 100;
-        System.out.println("L'enclos a été nettoyé. Propreté actuelle : " + cleanliness + "%");
+    /**
+     * Cleaned the selected enclosure.
+     * 5% to lose a life if minimum 1 of the creature is not sleeping
+     *
+     * @param zooMaster the zoo master
+     * @return the cleaned
+     */
+    public boolean getCleaned(ZooMaster zooMaster) {
+        boolean lifeLost = false;
+        synchronized (cleanlinessLock) {
+            cleanliness = 100;
+            System.out.println("L'enclos a été nettoyé. Propreté actuelle : " + cleanliness + "%");
+
+            boolean hasAwakeCreature = false;
+            for (Creature creature : creatures) {
+                if (!creature.isAsleep() && !creature.isDead()) {
+                    hasAwakeCreature = true;
+                    break;
+                }
+            }
+
+            if (hasAwakeCreature) {
+                double random = Math.random();
+                if (random <= 0.05) {
+                    zooMaster.setHp(zooMaster.getHp() - 1);
+                    lifeLost = true;
+                    System.out.println("Oh non ! " + zooMaster.getName() + " s'est fait mordre par une créature et a perdu une jambe ! PV restants : " + zooMaster.getHp());
+                    if (zooMaster.getHp() <= 0) {
+                        System.out.println(zooMaster.getName() + " est décédé à cause de ses blessures !");
+                    }
+                }
+            }
+        }
+        return lifeLost;
     }
 
+    /**
+     * Get creature by id creature.
+     *
+     * @param id the id
+     * @return the creature
+     */
     public Creature getCreatureById(int id){
         for (Creature creature : creatures) {
             if (creature.getId() == id) {
@@ -116,5 +168,18 @@ public class Enclosure {
             }
         }
         return null;
+    }
+
+    /**
+     * Periodic update of the enclosure.
+     */
+    public void periodicUpdate() {
+        synchronized (cleanlinessLock) {
+            int decrease = RANDOM.nextInt(6);
+            cleanliness -= decrease;
+            if (cleanliness < 0) {
+                cleanliness = 0;
+            }
+        }
     }
 }

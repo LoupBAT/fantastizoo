@@ -1,7 +1,9 @@
 package fr.g4zoo.fantastizoo.models.creatures;
 
-import java.util.Random;
-
+import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
+/**
+ * The type Oviparous.
+ */
 public abstract class Oviparous extends Creature {
 
     private int incubationPeriod;
@@ -16,8 +18,35 @@ public abstract class Oviparous extends Creature {
         this.incubationPeriod = incubationPeriod;
     }
 
-    public abstract void layEgg();
+    /**
+     * Lay egg.
+     *
+     * @param enclosure the enclosure where the egg will spawn
+     */
+    public void layEgg(Enclosure enclosure) {
+        if (this.getGender() != 'f' || this.getAge() < 10) {
+            return;
+        }
 
+        System.out.println(enclosure.getName() + ": " + this.getName() + " a pondu un œuf.");
+        simulateIncubationPeriod(() -> {
+            Creature baby = createBaby();
+            System.out.println(enclosure.getName() + ": L'œuf de " + getName() + " a éclos et un bébé est né : " + baby.getName() + " !");
+        });
+    }
+
+    /**
+     * Create baby creature.
+     *
+     * @return the creature
+     */
+    protected abstract Creature createBaby();
+
+    /**
+     * Simulate incubation period of the egg.
+     *
+     * @param onHatch the on hatch
+     */
     protected void simulateIncubationPeriod(Runnable onHatch) {
         new Thread(() -> {
             try {

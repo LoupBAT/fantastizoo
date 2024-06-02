@@ -3,7 +3,9 @@ package fr.g4zoo.fantastizoo.models.creatures;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
-
+/**
+ * The type Phoenix.
+ */
 public class Phoenix extends Oviparous implements Flyer, Reborner {
 
     private static final int DEFAULT_INCUBATION_PERIOD = 5;
@@ -11,7 +13,16 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
     private Enclosure enclosure;
     private int rebornCount = 0;
 
-    // Constructor
+    /**
+     * Instantiates a new Phoenix.
+     *
+     * @param name      the name
+     * @param enclosure the enclosure
+     * @param gender    the gender
+     * @param age       the age
+     * @param weight    the weight
+     * @param height    the height
+     */
     public Phoenix(String name, Enclosure enclosure, char gender, int age, double weight, double height) {
         this.setName(name);
         this.setIncubationPeriod(DEFAULT_INCUBATION_PERIOD);
@@ -23,28 +34,11 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
         this.setAgeMax(generateRandomAgeMax());
         enclosure.addCreature(this);
     }
-
+    /**
+     * Create a baby after the incubation period of the egg
+     */
     @Override
-    public void layEgg() {
-        if (this.getGender() != 'f' || this.getAge() < 10) {
-            System.out.println(this.getName() + " ne peut pas pondre d'œuf.");
-            return;
-        }
-
-        System.out.println(this.getName() + " a pondu un œuf.");
-        simulateIncubationPeriod(() -> {
-            Phoenix babyPhoenix = createBabyPhoenix();
-            System.out.println("L'œuf de " + getName() + " a éclos et un bébé phénix est né : " + babyPhoenix.getName() + " !");
-            addBabyPhoenixToZoo(babyPhoenix);
-        });
-    }
-
-    @Override
-    public void fly() {
-        System.out.println(this.getName() + " s'envole majestueusement !");
-    }
-
-    private Phoenix createBabyPhoenix() {
+    protected Creature createBaby() {
         String babyName = generateRandomName(NAMES);
         char gender = generateRandomGender();
         double weight = generateRandomWeight(1.0, 3.0);
@@ -52,14 +46,16 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
 
         return new Phoenix(babyName, this.enclosure, gender, 1, weight, height);
     }
-
-    private void addBabyPhoenixToZoo(Phoenix babyPhoenix) {
-        if (this.enclosure != null) {
-            this.enclosure.addCreature(babyPhoenix);
-        }
-        System.out.println("Bébé phénix ajouté au zoo: " + babyPhoenix.getName());
+    /**
+     * When the phoenix is trained he can fly.
+     */
+    @Override
+    public void fly() {
+        System.out.println(this.getName() + " s'envole majestueusement !");
     }
-
+    /**
+     * The phoenix can reborn 3 times
+     */
     @Override
     public void reborn() {
         if (canReborn()) {
@@ -67,15 +63,20 @@ public class Phoenix extends Oviparous implements Flyer, Reborner {
             System.out.println(this.getName() + " renaît de ses cendres !");
             resetToBabyState();
         } else {
-            System.out.println(this.getName() + " ne peut plus renaître.");
+            this.setDead(true);
+            this.setSatiety(0);
         }
     }
-
+    /**
+     * Check if the phoenix have reached the max reborn count
+     */
     @Override
     public boolean canReborn() {
         return rebornCount < MAX_REBORN_COUNT;
     }
-
+    /**
+     * When the phoenix have reborned she was reset as a newborn
+     */
     private void resetToBabyState() {
         this.setAge(0);
         this.setWeight(generateRandomWeight(1.0, 3.0));

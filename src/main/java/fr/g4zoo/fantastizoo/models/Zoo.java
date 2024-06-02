@@ -1,5 +1,6 @@
 package fr.g4zoo.fantastizoo.models;
 
+import fr.g4zoo.fantastizoo.models.creatures.Creature;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 import fr.g4zoo.fantastizoo.models.enclosures.Aviary; // Importer la classe Aviary
 
@@ -16,6 +17,12 @@ public class Zoo {
 
     // CONSTRUCTOR
 
+    /**
+     * Instantiates a new Zoo.
+     *
+     * @param name      the name
+     * @param zooMaster the zoo master
+     */
     public Zoo(String name, ZooMaster zooMaster) {
         this.name = name;
         this.zooMaster = zooMaster;
@@ -56,15 +63,25 @@ public class Zoo {
         this.name = name;
     }
 
+    /**
+     * Add enclosure.
+     *
+     * @param enclosure the enclosure
+     */
     public void addEnclosure(Enclosure enclosure) {
         if (enclosures.size() < maxEnclosures) {
             enclosures.add(enclosure);
-            System.out.println("Enclos ajouté au zoo: " + enclosure.getName());
         } else {
-            System.out.println("Cannot add enclosure. Maximum enclosures reached.");
+            System.out.println("Impossible d'ajouté un enclos limte atteinte.");
         }
     }
 
+    /**
+     * Gets enclosure by name.
+     *
+     * @param enclosureName the enclosure name
+     * @return the enclosure by name
+     */
     public Enclosure getEnclosureByName(String enclosureName) {
         for (Enclosure enclosure : enclosures) {
             if (enclosure.getName().equals(enclosureName)) {
@@ -74,7 +91,25 @@ public class Zoo {
         return null;
     }
 
+    /**
+     * Gets all enclosures.
+     *
+     * @return the all enclosures
+     */
     public ArrayList<Enclosure> getAllEnclosures() {
         return new ArrayList<>(enclosures);
+    }
+
+    /**
+     * Periodic update.
+     */
+    public void periodicUpdate() {
+        for (Enclosure enclosure : enclosures) {
+            enclosure.periodicUpdate();
+
+            for (Creature creature : enclosure.getCreatures()) {
+                creature.periodicUpdate(enclosure);
+            }
+        }
     }
 }
