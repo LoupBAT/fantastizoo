@@ -2,11 +2,13 @@ package fr.g4zoo.fantastizoo.models.creatures;
 
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Flyer;
 import fr.g4zoo.fantastizoo.models.creatures.interfaces.Reborner;
+import fr.g4zoo.fantastizoo.models.creatures.interfaces.Runner;
+import fr.g4zoo.fantastizoo.models.creatures.interfaces.Swimmer;
 import fr.g4zoo.fantastizoo.models.enclosures.Enclosure;
 /**
  * The type Dragon.
  */
-public class Dragon extends Oviparous implements Flyer, Reborner {
+public class Dragon extends Oviparous implements Flyer, Runner, Swimmer, Reborner {
 
     private static final int DEFAULT_INCUBATION_PERIOD = 10;
     private static final String[] NAMES = {"Draco", "Smaug", "Toothless", "Falkor", "Alduin", "Saphira", "Norbert", "Spyro"};
@@ -43,6 +45,20 @@ public class Dragon extends Oviparous implements Flyer, Reborner {
     public void fly() {
         System.out.println(this.getName() + " s'envole majestueusement !");
     }
+
+    /**
+     * When the Dragon is trained he can run.
+     */
+    @Override
+    public void run() {
+        System.out.println(this.getName() + " court à pleine vitesse !");
+    }
+
+    /**
+     * When the mermaid is trained she can swim.
+     */
+    @Override
+    public void swim() { System.out.println(this.getName() + " nage avec élégance !"); }
 
     /**
      * Create a baby after the incubation period of the egg
